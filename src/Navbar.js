@@ -24,7 +24,7 @@ function Navbar() {
           aria-labelledby="offcanvasNavbar2Label"
         >
           <div className="offcanvas-header">
-            <h5 className="offcanvas-title" id="offcanvasNavbar2Label">Offcanvas</h5>
+            <h5 className="offcanvas-title" id="offcanvasNavbar2Label">Sport Injury Bio</h5>
             <button 
               type="button" 
               className="btn-close btn-close-white" 
@@ -35,13 +35,16 @@ function Navbar() {
           <div className="offcanvas-body">
             <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
               <li className="nav-item">
-                <a className="nav-link active" aria-current="page" href="#">Home</a>
+                <a className="nav-link" href="/about">About</a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#">About</a>
+                <a className="nav-link" href="/contact">Contact</a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#">Contact</a>
+                <a className="nav-link" href="/blogs">Blogs</a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link" href="/volunteer">Fundraising & Volunteering</a>
               </li>
               <li className="nav-item dropdown">
                 <a 
@@ -51,25 +54,17 @@ function Navbar() {
                   data-bs-toggle="dropdown" 
                   aria-expanded="false"
                 >
-                  Dropdown
+                  Account
                 </a>
                 <ul className="dropdown-menu">
-                  <li><a className="dropdown-item" href="#">Action</a></li>
-                  <li><a className="dropdown-item" href="#">Another action</a></li>
+                  <li><a className="dropdown-item" href="/login">Login</a></li>
+                  <li><a className="dropdown-item" href="/dashboard">Dashboard</a></li>
                   <li><hr className="dropdown-divider" /></li>
-                  <li><a className="dropdown-item" href="#">Something else here</a></li>
+                  <li><a className="dropdown-item" href="#">Logout</a></li>
                 </ul>
               </li>
             </ul>
-            <form className="d-flex mt-3 mt-lg-0" role="search">
-              <input 
-                className="form-control me-2" 
-                type="search" 
-                placeholder="Search" 
-                aria-label="Search"
-              />
-              <button className="btn btn-outline-success" type="submit">Search</button>
-            </form>
+            
           </div>
         </div>
       </div>
