@@ -1,22 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Navbar from './Navbar';
+import Blog from './Blog'
+import './App.css';
+import About from './About'
+import Home from './Home'
+import Login from './Login'
+import Register from './Register'
 
 function App() {
   return (
-    <div className="App">
-      <Navbar/>
-      <form className="d-flex mt-3 pt-5 mt-lg-0" role="search">
-              <input 
-                className="form-control me-2" 
-                type="search" 
-                placeholder="Search" 
-                aria-label="Search"
-              />
-              <button className="btn btn-outline-success" type="submit">Search</button>
-            </form>
-     
-    </div>
+    <Router>
+      <div className="App">
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/blogs" element={<Blog />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
