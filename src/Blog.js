@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'; // Ensure Bootstrap CSS is import
 
 function BlogPage() {
   return (
-    <div className="container mt-2">
+    <div className="container mt-2" style={{minHeight: '100vh'}}>
       <h1 className="text-center mb-4">View Our Blogs</h1>
       <div className="row justify-content-center">
         <div className="col-12 col-md-12 col-lg-12 col-sm-12">

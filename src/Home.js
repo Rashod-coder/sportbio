@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'; // Ensure Bootstrap CSS is import
 
 function Home() {
   return (
-    <div className="container mt-2">
+    <div className="container mt-2" style={{minHeight: '100vh'}}>
      <h1 className='displa'>Sports Injury Bio </h1>
     </div>
   );
