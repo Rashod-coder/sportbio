@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Ensure Bootstrap CSS is imported
 import { useNavigate } from 'react-router-dom';
-import { onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth';
+import { onAuthStateChanged, signInWithEmailAndPassword, setPersistence, browserLocalPersistence } from 'firebase/auth';
 import { auth } from './Firebase/Firebase';
 
 function Login() {
@@ -10,26 +10,33 @@ function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const [user, setUser] = useState(null); 
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setUser(user);
-        navigate('/'); // Redirect to Dashboard if user is authenticated
-      } else {
-        setUser(null);
-      }
-    });
+    // Set Firebase Authentication persistence
+    setPersistence(auth, browserLocalPersistence)
+      .then(() => {
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+          if (user) {
+            setUser(user);
+            navigate('/dashboard'); // Redirect to Dashboard if user is authenticated
+          } else {
+            setUser(null);
+          }
+        });
 
-    return () => unsubscribe();
+        return () => unsubscribe();
+      })
+      .catch((error) => {
+        console.error('Error setting persistence:', error);
+      });
   }, [navigate]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      navigate('/'); // Redirect to Dashboard on successful login
+      navigate('/dashboard'); // Redirect to Dashboard on successful login
     } catch (err) {
       setError('Incorrect login details. Please try again.');
       setTimeout(() => setError(''), 5000); // Clear error message after 5 seconds
@@ -80,7 +87,7 @@ function Login() {
             />
           </div>
           <div className="text-center mb-4 mt-4 py-5">
-            <button style={{width: '300px'}} className="btn btn-primary btn-lg" type="submit">
+            <button style={{ width: '300px' }} className="btn btn-primary btn-lg" type="submit">
               Login
             </button>
           </div>

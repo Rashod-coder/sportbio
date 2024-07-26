@@ -1,7 +1,30 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { signOut } from 'firebase/auth';
+import { auth } from './Firebase/Firebase'; // Ensure the path to your Firebase configuration is correct
 
 function Navbar() {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    // Set up an authentication listener to check if the user is logged in or not
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      setUser(user);
+    });
+
+    return () => unsubscribe(); // Clean up the listener on component unmount
+  }, []);
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      window.location.href = '/';
+      window.alert('You have signed out');
+    } catch (error) {
+      console.error('Error signing out:', error);
+    }
+  };
+
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark" aria-label="Offcanvas navbar large">
       <div className="container-fluid">
@@ -18,7 +41,7 @@ function Navbar() {
           <span className="navbar-toggler-icon"></span>
         </button>
         <div 
-          className="offcanvas offcanvas-end text-bg-dark" 
+          className="offcanvas offcanvas-start text-bg-dark" // Offcanvas starts from the left
           tabIndex="-1" 
           id="offcanvasNavbar2" 
           aria-labelledby="offcanvasNavbar2Label"
@@ -37,6 +60,25 @@ function Navbar() {
               <li className="nav-item">
                 <a className="nav-link" href="/about">About</a>
               </li>
+              <li className="nav-item dropdown">
+              <a style={{ color: 'white' }} className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Account
+              </a>
+                <ul className="dropdown-menu">
+                  {user ? (
+                    <>
+                      <li><a className="dropdown-item" href="/dashboard">Dashboard</a></li>
+                      <li><hr className="dropdown-divider" /></li>
+                      <li><a className="dropdown-item" href="#" onClick={handleLogout}>Logout</a></li>
+                    </>
+                  ) : (
+                    <>
+                      <li><a className="dropdown-item" href="/login">Login</a></li>
+                      <li><a className="dropdown-item" href="/register">Register</a></li>
+                    </>
+                  )}
+                </ul>
+              </li>
               <li className="nav-item">
                 <a className="nav-link" href="#contact">Contact</a>
               </li>
@@ -46,25 +88,8 @@ function Navbar() {
               <li className="nav-item">
                 <a className="nav-link" href="/volunteer">Fundraising & Volunteering</a>
               </li>
-              <li className="nav-item dropdown">
-                <a 
-                  className="nav-link dropdown-toggle" 
-                  href="#" 
-                  role="button" 
-                  data-bs-toggle="dropdown" 
-                  aria-expanded="false"
-                >
-                  Account
-                </a>
-                <ul className="dropdown-menu">
-                  <li><a className="dropdown-item" href="/login">Login</a></li>
-                  <li><a className="dropdown-item" href="/dashboard">Dashboard</a></li>
-                  <li><hr className="dropdown-divider" /></li>
-                  <li><a className="dropdown-item" href="#">Logout</a></li>
-                </ul>
-              </li>
+              
             </ul>
-            
           </div>
         </div>
       </div>
