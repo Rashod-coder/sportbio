@@ -87,7 +87,7 @@ function BlogPage() {
                   <div className="card-body">
                     <h5 className="card-title">{blog.title || 'No Title'}</h5>
                     <h6 className="card-subtitle mb-2 text-muted">By {blog.author || 'Unknown'}</h6>
-                    <p className="card-text">{blog.summary || 'No Summary'}</p>
+                    <p className="card-text"> <p style={{fontWeight: 'bold'}}>Summary:</p> {blog.summary || 'No Summary'}</p>
                     <p className="card-text"><small className="text-muted">Date Published: </small></p>
                     <a  onClick={() => navigate("/blogs/" + blog.id)} className="btn btn-dark">View More</a>
                   </div>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { auth, db } from './Firebase/Firebase';
-import { doc, getDoc, addDoc, collection, updateDoc, deleteDoc, query, onSnapshot } from 'firebase/firestore';
+import { doc, getDoc, addDoc, collection, updateDoc, deleteDoc, query, onSnapshot, getDocs, where } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
@@ -16,8 +16,12 @@ function Dashboard() {
   const [postContent, setPostContent] = useState('');
   const [showPostForm, setShowPostForm] = useState(false);
   const [showTeamVerification, setShowTeamVerification] = useState(false);
+  const [summaryWordCount, setSummaryWordCount] = useState(0);
+
   const [verificationRequests, setVerificationRequests] = useState([]);
   const navigate = useNavigate();
+  const [teamMembers, setTeamMembers] = useState([]);
+
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
@@ -83,8 +87,28 @@ function Dashboard() {
       setShowPostForm(false);
     } catch (error) {
       console.error('Error adding document: ', error);
+      window.alert("Image Size too Big")
     }
   };
+  const handleSummaryChange = (e) => {
+    const value = e.target.value;
+    const words = value.split(/\s+/).filter((word) => word.length > 0);
+    if (words.length <= 100) {
+      setPostSummary(value);
+      setSummaryWordCount(words.length);
+    }
+  };
+
+  useEffect(() => {
+    const fetchTeamMembers = async () => {
+        const q = query(collection(db, 'users'), where('accountLevel', 'in', ['staff', 'admin']));
+                const querySnapshot = await getDocs(q);
+      const members = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      setTeamMembers(members);
+    };
+
+    fetchTeamMembers();
+  }, [accountLevel]);
 
   const handleRoleChange = async (verificationId, userId, newRole) => {
     try {
@@ -122,6 +146,34 @@ function Dashboard() {
               Current account level: <strong>{accountLevel}</strong>
             </p>
 
+            <div className="mt-5 mb-5 p-4 shadow rounded" style={{ backgroundColor: '#d1d7de' }}>
+                    <h2 className="mb-4" style={{ color: '#003366' }}>Team Members (Staff)</h2>
+                    {teamMembers.length > 0 ? (
+                      <table className="table table-bordered" style={{ borderColor: '#003366' }}>
+                        <thead>
+                          <tr style={{ backgroundColor: '#003366', color: 'white' }}>
+                            <th scope="col">First Name</th>
+                            <th scope="col">Last Name</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Role</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {teamMembers.map(member => (
+                            <tr key={member.id}>
+                              <td>{member.firstName}</td>
+                              <td>{member.lastName}</td>
+                              <td>{member.email}</td>
+                              <td>{member.accountLevel}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    ) : (
+                      <p>No staff members found.</p>
+                    )}
+                  </div>
+
             {(accountLevel === 'admin' || accountLevel === 'staff') && (
               <>
                 <button
@@ -143,7 +195,7 @@ function Dashboard() {
                 )}
 
                 {showPostForm && (
-                  <div className="mt-5 mb-5 p-4 bg-white shadow rounded" style={{ backgroundColor: '#ffffff' }}>
+                  <div className="mt-5 mb-5 p-4  shadow rounded" style={{ backgroundColor: '#d1d7de' }}>
                     <h2 className="mb-4" style={{ color: '#003366' }}>Create a New Blog Post</h2>
                     <form onSubmit={handlePostSubmit}>
                       <div className="form-group mb-3">
@@ -171,12 +223,15 @@ function Dashboard() {
                           rows="2"
                           placeholder="Enter post summary"
                           value={postSummary}
-                          onChange={(e) => setPostSummary(e.target.value)}
+                          onChange={handleSummaryChange}
                           required
                           style={{ borderColor: '#003366' }}
                         ></textarea>
+                        <small className="form-text text-muted">
+                          {summaryWordCount}/100 words
+                        </small>
                       </div>
-                      <div className="form-group mb-3">
+                      <div className="form-group mb-5">
                         <label htmlFor="postContent" className="form-label" style={{ color: '#003366' }}>
                           Content
                         </label>
@@ -194,10 +249,14 @@ function Dashboard() {
                               ['clean'],
                             ],
                           }}
-                          style={{ borderColor: '#003366' }}
+                          style={{
+                            borderColor: '#003366',
+                            height: 'auto',
+                            backgroundColor: 'white'
+                          }}
                         />
                       </div>
-                      <button type="submit" className="btn btn-success btn-lg mt-3" style={{ backgroundColor: '#003366', borderColor: '#003366' }}>
+                      <button type="submit" className="btn btn-success btn-lg mt-5 " style={{ backgroundColor: '#003366', borderColor: '#003366' }}>
                         Submit
                       </button>
                     </form>
@@ -211,7 +270,7 @@ function Dashboard() {
                       <table className="table table-striped">
                         <thead>
                           <tr>
-                            <th>User ID</th>
+                            <th>Name</th>
                             <th>User Email</th>
                             <th>Requested Level</th>
                             <th>Current Role</th>
@@ -221,7 +280,7 @@ function Dashboard() {
                         <tbody>
                           {verificationRequests.map((request) => (
                             <tr key={request.id}>
-                              <td>{request.userId}</td>
+                              <td>{request.firstName}</td>
                               <td>{request.email}</td>
                               <td>{request.requestedLevel}</td>
                               <td>{request.currentRole}</td>

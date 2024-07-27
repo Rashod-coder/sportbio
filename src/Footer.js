@@ -4,8 +4,8 @@ import { FaLinkedin, FaInstagram } from 'react-icons/fa'; // Import the icons fr
 function Footer() {
   return (
     <footer
-      className="bg-dark text-light py-4"
-      style={{ position: 'relative', bottom: '0', width: '100%' }}
+      className="text-light py-4"
+      style={{ position: 'relative', bottom: '0', width: '100%', backgroundColor: 'black' }}
     >
       <div className="container">
         <div className="row align-items-center">

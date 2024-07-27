@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { collection, doc, getDoc } from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
 import { db } from './Firebase/Firebase';
 import { useLocation, useNavigate } from 'react-router-dom';
 
@@ -32,41 +32,39 @@ function BlogPost() {
     }, [postId]);
 
     return (
-        <div style={{background: 'white' }}>
-
-        
-        <div className="container" style={{minHeight: '100vh'}} >
-            {isLoading ? (
-                <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '100vh' }}>
-                    <div className="spinner-border" role="status">
-                        <span className="visually-hidden">Loading...</span>
-                    </div>
-                </div>
-            ) : post ? (
-                <div>
-                    <div className="row mb-4">
-                        <div className="col-md-12">
-                            <h1 className="text-center mt-5">{post.title}</h1>
-                        </div>
-                        <div className="col-md-12 text-center">
-                            <button className="btn btn-primary" onClick={() => navigate('/blogs')}>Back to Blogs</button>
-                        </div>
-                        <div className="col-md-12 text-center mt-3">
-                            <p>Quick Summary: {post.summary}</p>
+        <div style={{ background: 'white', minHeight: '100vh', padding: '20px' }}>
+            <div className="container" style={{ maxWidth: '1000px', margin: '0 auto' }}>
+                {isLoading ? (
+                    <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '100vh' }}>
+                        <div className="spinner-border" role="status">
+                            <span className="visually-hidden">Loading...</span>
                         </div>
                     </div>
-                    <hr />
-                    <div className="row">
-                        <div className="col-md-12">
-                            <h4>By {post.author}</h4>
-                            <div className="content" dangerouslySetInnerHTML={{ __html: post.content }}></div>
+                ) : post ? (
+                    <div>
+                        <div className="row mb-4">
+                            <div className="col-md-12">
+                                <h1 className="text-center mt-5" style={{ wordWrap: 'break-word' }}>{post.title}</h1>
+                            </div>
+                            <div className="col-md-12 text-center">
+                                <button className="btn btn-primary" onClick={() => navigate('/blogs')}>Back to Blogs</button>
+                            </div>
+                            <div className="col-md-12 text-center mt-3">
+                                <p style={{ wordWrap: 'break-word' }}>Quick Summary: {post.summary}</p>
+                            </div>
+                        </div>
+                        <hr />
+                        <div className="row">
+                            <div className="col-md-12">
+                                <h4>By: {post.author}</h4>
+                                <div className="content" style={{ overflowX: 'auto', wordWrap: 'break-word' }} dangerouslySetInnerHTML={{ __html: post.content }}></div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            ) : (
-                <p className="text-center">Post not found</p>
-            )}
-        </div>
+                ) : (
+                    <p className="text-center">Post not found</p>
+                )}
+            </div>
         </div>
     );
 }
