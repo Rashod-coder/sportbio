@@ -146,7 +146,7 @@ function Dashboard() {
               Current account level: <strong>{accountLevel}</strong>
             </p>
 
-            <div className="mt-5 mb-5 p-4 shadow rounded" style={{ backgroundColor: '#d1d7de' }}>
+            <div className="mt-5 mb-5 p-4 shadow rounded" style={{ backgroundColor: '#d1d7de', overflowX: 'auto', display: 'block' }}>
                     <h2 className="mb-4" style={{ color: '#003366' }}>Team Members (Staff)</h2>
                     {teamMembers.length > 0 ? (
                       <table className="table table-bordered" style={{ borderColor: '#003366' }}>
@@ -264,7 +264,7 @@ function Dashboard() {
                 )}
 
                 {showTeamVerification && (
-                  <div className="mt-5 mb-5 p-4 bg-white shadow rounded" style={{ backgroundColor: '#ffffff' }}>
+                    <div className="mt-5 mb-5 p-4 shadow rounded" style={{ backgroundColor: '#d1d7de', overflowX: 'auto', display: 'block' }}>
                     <h2 className="mb-4" style={{ color: '#003366' }}>Team Verification Requests</h2>
                     {verificationRequests.length > 0 ? (
                       <table className="table table-striped">
