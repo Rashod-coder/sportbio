@@ -38,16 +38,17 @@ function Footer() {
   };
 
   return (
-    <footer
+    <div
       className="text-dark py-4"
       style={{
         position: 'relative',
         bottom: '0',
         width: '100%',
         backgroundColor: '#f0f8ff',
+       
       }}
     >
-      <div className="container">
+      <div className="container" id='footer'>
         <div className="row mt-4">
           <div className="col-lg-12 mx-auto">
             <h2
@@ -267,7 +268,7 @@ function Footer() {
           © 2024 Sport Injury Bio
         </div>
       </div>
-    </footer>
+    </div>
   );
 }
 

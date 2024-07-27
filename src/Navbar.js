@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { signOut } from 'firebase/auth';
 import { auth } from './Firebase/Firebase'; // Ensure the path to your Firebase configuration is correct
-import Logo from './logo.png'; // Import the logo image
+import Logo from './finalLogo.png'; // Import the logo image
 
 function Navbar() {
   const [user, setUser] = useState(null);
@@ -27,7 +27,7 @@ function Navbar() {
   };
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-light" style={{ backgroundColor: '#ffffff', boxShadow: '0 4px 6px rgba(0,0,0,0.1)' }} aria-label="Offcanvas navbar large">
+    <nav className="navbar navbar-expand-lg navbar-dark" style={{ backgroundColor: 'black', boxShadow: '0 4px 6px rgba(0,0,0,0.1)' }} aria-label="Offcanvas navbar large">
       <div className="container-fluid">
         <a className="navbar-brand" href="/">
           <img src={Logo} alt="Logo" style={{ height: '80px', width: 'auto' }} /> {/* Adjust the logo size here */}
@@ -44,7 +44,7 @@ function Navbar() {
           <span className="navbar-toggler-icon"></span>
         </button>
         <div 
-          className="offcanvas offcanvas-start text-bg-light" // Offcanvas starts from the left
+          className="offcanvas offcanvas-start text-bg-dark" // Offcanvas starts from the left
           tabIndex="-1" 
           id="offcanvasNavbar2" 
           aria-labelledby="offcanvasNavbar2Label"
@@ -61,10 +61,10 @@ function Navbar() {
           <div className="offcanvas-body">
             <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
               <li className="nav-item">
-                <a className="nav-link" style={{fontSize: '20px'}} href="/about">About</a>
+                <a className="nav-link text-light" style={{fontSize: '20px'}} href="#about">About</a>
               </li>
               <li className="nav-item dropdown">
-                <a style={{ color: 'black', fontSize: '20px' }} className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <a style={{ color: 'white', fontSize: '20px' }} className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   Account
                 </a>
                 <ul className="dropdown-menu">
@@ -83,10 +83,10 @@ function Navbar() {
                 </ul>
               </li>
               <li className="nav-item">
-                <a className="nav-link" style={{fontSize: '20px'}} href="/blogs">Blogs</a>
+                <a className="nav-link text-light"  style={{fontSize: '20px'}} href="/blogs">Blogs</a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" style={{fontSize: '20px'}} href="/volunteer">Fundraising & Volunteering</a>
+                <a className="nav-link text-light" style={{fontSize: '20px'}} href="/volunteer">Fundraising & Volunteering</a>
               </li>
             </ul>
           </div>

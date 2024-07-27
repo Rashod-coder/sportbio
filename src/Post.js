@@ -34,6 +34,14 @@ function BlogPost() {
     return (
         <div style={{ background: 'white', minHeight: '100vh', padding: '20px' }}>
             <div className="container" style={{ maxWidth: '1000px', margin: '0 auto' }}>
+                <style>
+                    {`
+                    .content img {
+                        max-width: 100%;
+                        height: auto;
+                    }
+                    `}
+                </style>
                 {isLoading ? (
                     <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '100vh' }}>
                         <div className="spinner-border" role="status">
@@ -44,9 +52,9 @@ function BlogPost() {
                     <div>
                         <div className='row'>
                             <div className='col-lg-4'>
-                            <div className="col-md-12 text-center">
-                                <button className="btn btn-primary" onClick={() => navigate('/blogs')}>Back to Blogs</button>
-                            </div>
+                                <div className="col-md-12 text-center">
+                                    <button className="btn btn-primary" onClick={() => navigate('/blogs')}>Back to Blogs</button>
+                                </div>
                             </div>
                         </div>
                         <div className="row mb-4">
@@ -71,10 +79,7 @@ function BlogPost() {
                     </div>
                 ) : (
                     <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '90vh' }}>
-
-                    <p className="text-center display-1 justify-content-center">404 Page Not Found</p>
-                   
-
+                        <p className="text-center display-1 justify-content-center">404 Page Not Found</p>
                     </div>
                 )}
             </div>

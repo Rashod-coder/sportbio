@@ -67,7 +67,7 @@ function Login() {
               <i className="zmdi zmdi-landscape"></i>
             </span>
           </div>
-          <h2 className="text-center mb-4" style={{ color: '#000' }}>Log in</h2>
+          <h2 className="text-center mb-4" style={{ color: '#000' }}>Login</h2>
           {error && <div className="alert alert-danger">{error}</div>}
           <div className="form-group mb-4">
             <input
