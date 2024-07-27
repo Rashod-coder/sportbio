@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import RequestRoleChange from './verify';
+
 
 function Dashboard() {
   const [userName, setUserName] = useState('');
@@ -17,7 +19,8 @@ function Dashboard() {
   const [showPostForm, setShowPostForm] = useState(false);
   const [showTeamVerification, setShowTeamVerification] = useState(false);
   const [summaryWordCount, setSummaryWordCount] = useState(0);
-
+  const [userId, setUserId] = useState('');
+const [userEmail, setUserEmail] = useState('');
   const [verificationRequests, setVerificationRequests] = useState([]);
   const navigate = useNavigate();
   const [teamMembers, setTeamMembers] = useState([]);
@@ -109,6 +112,18 @@ function Dashboard() {
 
     fetchTeamMembers();
   }, [accountLevel]);
+
+  const handleRejectRequest = async (verificationId) => {
+    try {
+      // Delete the verification request
+      const verificationDoc = doc(db, 'verification', verificationId);
+      await deleteDoc(verificationDoc);
+  
+      console.log('Verification request rejected and deleted');
+    } catch (error) {
+      console.error('Error deleting request: ', error);
+    }
+  };
 
   const handleRoleChange = async (verificationId, userId, newRole) => {
     try {
@@ -278,6 +293,7 @@ function Dashboard() {
                             <th>Requested Level</th>
                             <th>Current Role</th>
                             <th>Action</th>
+                            <th>Reject</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -287,17 +303,26 @@ function Dashboard() {
                               <td>{request.email}</td>
                               <td>{request.requestedLevel}</td>
                               <td>{request.currentRole}</td>
+                              
                               <td>
                                 <select
                                   className="form-select"
                                   onChange={(e) => handleRoleChange(request.id, request.userId, e.target.value)}
                                   style={{ borderColor: '#003366' }}
                                 >
-                                  <option value="" disabled>Select Role</option>
+                                  <option value="">Select Role</option>
                                   <option value="basic">Basic</option>
                                   <option value="staff">Staff</option>
                                 </select>
+                                
                               </td>
+                              <td><button
+          className="btn btn-danger btn-sm"
+          onClick={() => handleRejectRequest(request.id)}
+          style={{ marginLeft: '10px' }}
+        >
+          Reject
+        </button></td>
                             </tr>
                           ))}
                         </tbody>
@@ -308,6 +333,13 @@ function Dashboard() {
                   </div>
                 )}
               </>
+            )}
+            {/* Render the RequestRoleChange component for basic users */}
+            {accountLevel === 'basic' && (
+              <div>
+                <h2 className="text-center" style={{ color: '#003366' }}>Request Account Level Change</h2>
+                <RequestRoleChange userId={userId} userEmail={userEmail} userName={userName} />
+              </div>
             )}
           </>
         ) : (
