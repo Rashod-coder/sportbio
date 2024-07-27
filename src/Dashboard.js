@@ -146,7 +146,12 @@ function Dashboard() {
               Current account level: <strong>{accountLevel}</strong>
             </p>
 
-            <div className="mt-5 mb-5 p-4 shadow rounded" style={{ backgroundColor: '#d1d7de', overflowX: 'auto', display: 'block' }}>
+           
+
+            {(accountLevel === 'admin' || accountLevel === 'staff') && (
+                
+              <>
+               <div className="mt-5 mb-5 p-4 shadow rounded" style={{ backgroundColor: '#d1d7de', overflowX: 'auto', display: 'block', overflowY: 'auto', height: '250px' }}>
                     <h2 className="mb-4" style={{ color: '#003366' }}>Team Members (Staff)</h2>
                     {teamMembers.length > 0 ? (
                       <table className="table table-bordered" style={{ borderColor: '#003366' }}>
@@ -173,9 +178,6 @@ function Dashboard() {
                       <p>No staff members found.</p>
                     )}
                   </div>
-
-            {(accountLevel === 'admin' || accountLevel === 'staff') && (
-              <>
                 <button
                   className="btn btn-primary btn-lg my-4 me-3"
                   style={{ backgroundColor: '#003366', borderColor: '#003366' }}

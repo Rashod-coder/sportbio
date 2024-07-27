@@ -62,7 +62,12 @@ function BlogPost() {
                         </div>
                     </div>
                 ) : (
-                    <p className="text-center">Post not found</p>
+                    <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '90vh' }}>
+
+                    <p className="text-center display-1 justify-content-center">404 Page Not Found</p>
+                   
+
+                    </div>
                 )}
             </div>
         </div>
