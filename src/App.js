@@ -1,8 +1,7 @@
-// App.js
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes, useLocation, Outlet } from 'react-router-dom';
 import Navbar from './Navbar';
 import Blog from './Blog';
-import './App.css';
 import About from './About';
 import Home from './Home';
 import Login from './Login';
@@ -13,22 +12,21 @@ import { AuthProvider } from './AuthContext';
 import ProtectedRoute from './ProtectedRoute';
 import Fundraiser from './Fundraising';
 import Posts from './Post';
-
+import './App.css';
 
 function App() {
   return (
     <AuthProvider>
       <Router>
-        <div className="App">
-          <Navbar />
-          <Routes>
+        <Routes>
+          <Route path="/" element={<Layout />}>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/blogs" element={<Blog />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/volunteer" element={<Fundraiser />} />
-            <Route path="/blogs/:id" element={<Posts/>} />
+            <Route path="/blogs/:id" element={<Posts />} />
 
             <Route
               path="/dashboard"
@@ -38,11 +36,30 @@ function App() {
                 </ProtectedRoute>
               }
             />
-          </Routes>
-          <Footer />
-        </div>
+          </Route>
+        </Routes>
       </Router>
     </AuthProvider>
+  );
+}
+
+function Layout() {
+  const location = useLocation();
+  
+  // List of paths where the Footer should not be displayed
+  const noFooterPaths = ['/dashboard', '/login', '/register'];
+  
+  // Check if the current path starts with `/blogs/`
+  const isBlogPage = location.pathname.startsWith('/blogs/');
+
+  return (
+    <>
+      <Navbar />
+      <main>
+        <Outlet />
+      </main>
+      {!noFooterPaths.includes(location.pathname) && !isBlogPage && <Footer />}
+    </>
   );
 }
 

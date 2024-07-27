@@ -42,13 +42,18 @@ function BlogPost() {
                     </div>
                 ) : post ? (
                     <div>
+                        <div className='row'>
+                            <div className='col-lg-4'>
+                            <div className="col-md-12 text-center">
+                                <button className="btn btn-primary" onClick={() => navigate('/blogs')}>Back to Blogs</button>
+                            </div>
+                            </div>
+                        </div>
                         <div className="row mb-4">
                             <div className="col-md-12">
                                 <h1 className="text-center mt-5" style={{ wordWrap: 'break-word' }}>{post.title}</h1>
                             </div>
-                            <div className="col-md-12 text-center">
-                                <button className="btn btn-primary" onClick={() => navigate('/blogs')}>Back to Blogs</button>
-                            </div>
+                            
                             <div className="col-md-12 text-center mt-3">
                                 <p style={{ wordWrap: 'break-word' }}>Quick Summary: {post.summary}</p>
                             </div>
@@ -58,6 +63,9 @@ function BlogPost() {
                             <div className="col-md-12">
                                 <h4>By: {post.author}</h4>
                                 <div className="content" style={{ overflowX: 'auto', wordWrap: 'break-word' }} dangerouslySetInnerHTML={{ __html: post.content }}></div>
+                            </div>
+                            <div className="col-md-12 text-center">
+                                <button className="btn btn-primary" onClick={() => navigate('/blogs')}>Back to Blogs</button>
                             </div>
                         </div>
                     </div>

@@ -227,7 +227,8 @@ function Dashboard() {
                           value={postSummary}
                           onChange={handleSummaryChange}
                           required
-                          style={{ borderColor: '#003366' }}
+                          style={{ borderColor: '#003366', minHeight: '100px', maxHeight: '100px' }}
+                          
                         ></textarea>
                         <small className="form-text text-muted">
                           {summaryWordCount}/100 words
@@ -254,7 +255,7 @@ function Dashboard() {
                           style={{
                             borderColor: '#003366',
                             height: 'auto',
-                            backgroundColor: 'white'
+                            backgroundColor: 'white',
                           }}
                         />
                       </div>
