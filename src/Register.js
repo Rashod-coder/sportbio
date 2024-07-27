@@ -4,6 +4,7 @@ import { auth, db } from './Firebase/Firebase'; // Adjust import based on your F
 import { createUserWithEmailAndPassword, signOut } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore'; // Import setDoc for Firestore
 import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
+import './Register.css'
 
 function Register() {
   const [email, setEmail] = useState('');
@@ -57,18 +58,22 @@ function Register() {
   };
 
   return (
+    <div className='register-background'>
+
+    
     <div
       className="container d-flex justify-content-center align-items-center min-vh-100"
       style={{ backgroundImage: "url('images/bg-01.jpg')", backgroundSize: 'cover' }}
     >
       <div
-        className="p-4 bg-transparent rounded shadow"
+        className="p-4  rounded shadow"
         style={{
           maxWidth: '450px', // Max width for larger screens
           width: '100%',     // Full width for smaller screens
           padding: '4rem',   // Padding to make it larger
           height: 'auto',
-          minHeight: '500px'    // Adjust height to fit content
+          minHeight: '500px',
+          backgroundColor: 'rgba(255, 255, 255, 0.5)'    // Adjust height to fit content
         }}
       >
         <form className="login100-form" onSubmit={handleRegister}>
@@ -136,6 +141,7 @@ function Register() {
           </div>
         </form>
       </div>
+    </div>
     </div>
   );
 }

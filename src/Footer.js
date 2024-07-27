@@ -23,7 +23,7 @@ function Footer() {
               <FaLinkedin />
             </a>
             <a
-              href="https://www.instagram.com"
+              href="https://www.instagram.com/sportinjurybio?igsh=MzRlODBiNWFlZA=="
               target="_blank"
               rel="noopener noreferrer"
               className="text-light mx-2"

@@ -2,12 +2,12 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Ensure Bootstrap CSS is imported
 
-function About() {
+function Fundraiser() {
   return (
     <div className="container mt-2" style={{minHeight: '100vh'}}>
-      <h1 className='display-2'>About us</h1>
+      <h1 className='display-3'>Fundraising & Volunteering </h1>
     </div>
   );
 }
 
-export default About;
+export default Fundraiser;

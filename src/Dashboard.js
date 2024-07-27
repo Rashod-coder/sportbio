@@ -103,22 +103,22 @@ function Dashboard() {
   };
 
   return (
-    <div className="bg-light min-vh-100 d-flex flex-column align-items-center">
+    <div className="bg-light min-vh-100 d-flex flex-column align-items-center" style={{ backgroundColor: '#e6f0ff' }}>
       <div className="container mt-5">
         {loading ? (
           <div className="d-flex justify-content-center align-items-center min-vh-100">
             <div
               className="spinner-border"
               role="status"
-              style={{ width: '3rem', height: '3rem' }}
+              style={{ width: '3rem', height: '3rem', color: '#003366' }}
             >
               <span className="visually-hidden">Loading...</span>
             </div>
           </div>
         ) : authenticated ? (
           <>
-            <h1 className="display-4 text-center mb-4">Welcome, {userName}!</h1>
-            <p className="lead text-center">
+            <h1 className="display-4 text-center mb-4" style={{ color: '#003366' }}>Welcome, {userName}!</h1>
+            <p className="lead text-center" style={{ color: '#003366' }}>
               Current account level: <strong>{accountLevel}</strong>
             </p>
 
@@ -126,14 +126,16 @@ function Dashboard() {
               <>
                 <button
                   className="btn btn-primary btn-lg my-4 me-3"
+                  style={{ backgroundColor: '#003366', borderColor: '#003366' }}
                   onClick={() => setShowPostForm(!showPostForm)}
                 >
-                  {showPostForm ? 'Cancel' : 'Create Post'}
+                  {showPostForm ? 'Cancel Post' : 'Create Post'}
                 </button>
 
                 {(accountLevel === 'admin') && (
                   <button
-                    className="btn btn-info btn-lg my-4"
+                    className="btn btn-info btn-lg my-4 text-light"
+                    style={{ backgroundColor: '#003366', borderColor: '#003366' }}
                     onClick={() => setShowTeamVerification(!showTeamVerification)}
                   >
                     {showTeamVerification ? 'Hide Team Verification' : 'View Team Verification'}
@@ -141,11 +143,11 @@ function Dashboard() {
                 )}
 
                 {showPostForm && (
-                  <div className="mt-5 mb-5 p-4 bg-white shadow rounded">
-                    <h2 className="mb-4">Create a New Blog Post</h2>
+                  <div className="mt-5 mb-5 p-4 bg-white shadow rounded" style={{ backgroundColor: '#ffffff' }}>
+                    <h2 className="mb-4" style={{ color: '#003366' }}>Create a New Blog Post</h2>
                     <form onSubmit={handlePostSubmit}>
                       <div className="form-group mb-3">
-                        <label htmlFor="postTitle" className="form-label">
+                        <label htmlFor="postTitle" className="form-label" style={{ color: '#003366' }}>
                           Title
                         </label>
                         <input
@@ -156,10 +158,11 @@ function Dashboard() {
                           value={postTitle}
                           onChange={(e) => setPostTitle(e.target.value)}
                           required
+                          style={{ borderColor: '#003366' }}
                         />
                       </div>
                       <div className="form-group mb-3">
-                        <label htmlFor="postSummary" className="form-label">
+                        <label htmlFor="postSummary" className="form-label" style={{ color: '#003366' }}>
                           Summary
                         </label>
                         <textarea
@@ -170,10 +173,11 @@ function Dashboard() {
                           value={postSummary}
                           onChange={(e) => setPostSummary(e.target.value)}
                           required
+                          style={{ borderColor: '#003366' }}
                         ></textarea>
                       </div>
                       <div className="form-group mb-3">
-                        <label htmlFor="postContent" className="form-label">
+                        <label htmlFor="postContent" className="form-label" style={{ color: '#003366' }}>
                           Content
                         </label>
                         <ReactQuill
@@ -190,9 +194,10 @@ function Dashboard() {
                               ['clean'],
                             ],
                           }}
+                          style={{ borderColor: '#003366' }}
                         />
                       </div>
-                      <button type="submit" className="btn btn-success btn-lg mt-3">
+                      <button type="submit" className="btn btn-success btn-lg mt-3" style={{ backgroundColor: '#003366', borderColor: '#003366' }}>
                         Submit
                       </button>
                     </form>
@@ -200,8 +205,8 @@ function Dashboard() {
                 )}
 
                 {showTeamVerification && (
-                  <div className="mt-5 p-4 bg-white shadow rounded">
-                    <h2 className="mb-4">Team Verification Requests</h2>
+                  <div className="mt-5 mb-5 p-4 bg-white shadow rounded" style={{ backgroundColor: '#ffffff' }}>
+                    <h2 className="mb-4" style={{ color: '#003366' }}>Team Verification Requests</h2>
                     {verificationRequests.length > 0 ? (
                       <table className="table table-striped">
                         <thead>
@@ -224,6 +229,7 @@ function Dashboard() {
                                 <select
                                   className="form-select"
                                   onChange={(e) => handleRoleChange(request.id, request.userId, e.target.value)}
+                                  style={{ borderColor: '#003366' }}
                                 >
                                   <option value="" disabled>Select Role</option>
                                   <option value="basic">Basic</option>

@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'; // Ensure Bootstrap CSS is import
 import { useNavigate } from 'react-router-dom';
 import { onAuthStateChanged, signInWithEmailAndPassword, setPersistence, browserLocalPersistence } from 'firebase/auth';
 import { auth } from './Firebase/Firebase';
+import './Login.css'
 
 function Login() {
   const navigate = useNavigate();
@@ -44,27 +45,29 @@ function Login() {
   };
 
   return (
+    <div className='login-background'>
     <div
       className="container d-flex justify-content-center align-items-center min-vh-100"
-      style={{ backgroundImage: "url('images/bg-01.jpg')", backgroundSize: 'cover' }}
+       // Blue background
     >
       <div
-        className="p-4 bg-transparent rounded shadow"
+        className="p-4  rounded shadow"
         style={{
           maxWidth: '450px', // Max width for larger screens
           width: '100%',     // Full width for smaller screens
           padding: '4rem',   // Padding to make it larger
           height: 'auto',
-          minHeight: '500px'    // Adjust height to fit content
+          minHeight: '500px',
+          backgroundColor: 'rgba(255, 255, 255, 0.5)'   // Adjust height to fit content
         }}
       >
         <form className="login100-form" onSubmit={handleLogin}>
           <div className="text-center mb-4">
-            <span className="login100-form-logo" style={{ fontSize: '3rem' }}>
+            <span className="login100-form-logo" style={{ fontSize: '3rem', color: '#000' }}>
               <i className="zmdi zmdi-landscape"></i>
             </span>
           </div>
-          <h2 className="text-center mb-4">Log in</h2>
+          <h2 className="text-center mb-4" style={{ color: '#000' }}>Log in</h2>
           {error && <div className="alert alert-danger">{error}</div>}
           <div className="form-group mb-4">
             <input
@@ -74,6 +77,7 @@ function Login() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
+              style={{ borderColor: '#000', color: '#000' }}
             />
           </div>
           <div className="form-group mb-4">
@@ -84,20 +88,22 @@ function Login() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
+              style={{ borderColor: '#000', color: '#000' }}
             />
           </div>
           <div className="text-center mb-4 mt-4 py-5">
-            <button style={{ width: '300px' }} className="btn btn-primary btn-lg" type="submit">
+            <button style={{ width: '300px', backgroundColor: '#007bff', color: '#fff' }} className="btn btn-primary btn-lg" type="submit">
               Login
             </button>
           </div>
           <div className="text-center">
-            <a className="text-muted" href="/register">
+            <a className="text-muted" href="/register" style={{ color: '#000', textDecoration: 'none' }}>
               Don't have an account? Sign up here
             </a>
           </div>
         </form>
       </div>
+    </div>
     </div>
   );
 }

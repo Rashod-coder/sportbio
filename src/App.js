@@ -11,6 +11,9 @@ import Dashboard from './Dashboard';
 import Footer from './Footer';
 import { AuthProvider } from './AuthContext';
 import ProtectedRoute from './ProtectedRoute';
+import Fundraiser from './Fundraising';
+import Posts from './Post';
+
 
 function App() {
   return (
@@ -24,6 +27,9 @@ function App() {
             <Route path="/blogs" element={<Blog />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/volunteer" element={<Fundraiser />} />
+            <Route path="/blogs/:id" element={<Posts/>} />
+
             <Route
               path="/dashboard"
               element={
