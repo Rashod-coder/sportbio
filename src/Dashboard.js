@@ -176,9 +176,9 @@ function Dashboard() {
             <h1 className="display-4 text-center mb-4" style={{ color: '#003366' }}>Welcome {userName}!</h1>
             <div className='container'>
               <div className='row'>
-                <div className='col-sm-4'>
+                <div className='col-sm-12'>
                 <p className="display-5 text-center" style={{ color: '#003366' }}>
-                  Current Account Level: <strong>{accountLevel}</strong>
+                  Account Level: <strong>{accountLevel}</strong>
                 </p>
                 
                 </div>
@@ -341,6 +341,7 @@ function Dashboard() {
                               <option value="">Select Role</option>
                               <option value="basic">Basic</option>
                               <option value="staff">Staff</option>
+                              <option value='admin'>Admin</option>
                             </select>
                             
                           </td>

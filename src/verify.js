@@ -95,9 +95,9 @@ function RequestRoleChange() {
     );
   }
 
-  // Conditionally render the component only for basic users
-  if (currentRole !== 'basic') {
-    return null; // Don't render anything for non-basic users
+  // Conditionally render the component for 'basic' and 'staff' users
+  if (currentRole !== 'basic' && currentRole !== 'staff') {
+    return null; // Don't render anything for other roles
   }
 
   return (
@@ -122,8 +122,17 @@ function RequestRoleChange() {
               disabled={hasPendingRequest} 
             >
               <option value="" disabled>Select a role</option>
-              <option value="staff">Staff</option>
-              <option value="admin">Admin</option>
+              {currentRole === 'basic' && (
+                <>
+                  <option value="staff">Staff</option>
+                </>
+              )}
+              {currentRole === 'staff' && (
+                <>
+                  <option value="admin">Admin</option>
+                  <option value="basic">Basic</option>
+                </>
+              )}
             </select>
           </div>
           <button

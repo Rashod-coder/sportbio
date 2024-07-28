@@ -13,7 +13,17 @@ import ProtectedRoute from './ProtectedRoute';
 import Fundraiser from './Fundraising';
 import Posts from './Post';
 import './App.css';
-import { Analytics } from "@vercel/analytics/react"
+import { Analytics } from "@vercel/analytics/react";
+
+// Define the NotFound component directly here
+const NotFound = () => {
+  return (
+    <div style={{ textAlign: 'center', padding: '50px', minHeight:'90vh' }}>
+      <h1 className='display-3'>404</h1>
+      <p>Page Not Found</p>
+    </div>
+  );
+};
 
 function App() {
   return (
@@ -38,9 +48,11 @@ function App() {
               }
             />
             
+            {/* 404 Route */}
+            <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>
-        <Analytics/>
+        <Analytics />
       </Router>
     </AuthProvider>
   );
@@ -50,7 +62,7 @@ function Layout() {
   const location = useLocation();
   
   // List of paths where the Footer should not be displayed
-  const noFooterPaths = ['/dashboard', '/login', '/register', '/blogs'];
+  const noFooterPaths = ['/dashboard', '/login', '/register', '/blogs', '*'];
   
   // Check if the current path starts with `/blogs/`
   const isBlogPage = location.pathname.startsWith('/blogs/');
