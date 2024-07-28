@@ -13,6 +13,7 @@ import ProtectedRoute from './ProtectedRoute';
 import Fundraiser from './Fundraising';
 import Posts from './Post';
 import './App.css';
+import { Analytics } from "@vercel/analytics/react"
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
             
           </Route>
         </Routes>
+        <Analytics/>
       </Router>
     </AuthProvider>
   );
