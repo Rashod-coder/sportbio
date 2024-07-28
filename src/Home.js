@@ -2,6 +2,8 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Ensure Bootstrap CSS is imported
 import logo from './givenLogo.JPG';
+import { Analytics } from "@vercel/analytics/react"
+
 
 function Home() {
   // Scroll to footer function
@@ -39,6 +41,7 @@ function Home() {
         <p className='mt-5' style={{fontSize: '23px'}}>We will be trying our best to upload a new article every week!</p>
       </div>
     </div>
+    <Analytics/>
     </div>
   );
 }

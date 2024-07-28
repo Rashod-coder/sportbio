@@ -3,6 +3,8 @@ import 'bootstrap/dist/css/bootstrap.min.css'; // Ensure Bootstrap CSS is import
 import { auth, db } from './Firebase/Firebase'; // Adjust the import path if necessary
 import { doc, getDocs, collection } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
+import { Analytics } from "@vercel/analytics/react"
+
 
 function BlogPage() {
   const navigate = useNavigate();
@@ -152,6 +154,7 @@ function BlogPage() {
         </div>
       )}
     </div>
+    <Analytics/>
     </div>
   );
 }

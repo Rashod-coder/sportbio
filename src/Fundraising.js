@@ -1,6 +1,8 @@
 // src/BlogPage.js
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { Analytics } from "@vercel/analytics/react"
+
 
 function Fundraiser() {
   return (
@@ -83,6 +85,8 @@ function Fundraiser() {
           Unfortunately, we don’t have any planned for now. Check back soon!
         </p>
       </div>
+      <Analytics/>
+
     </div>
   );
 }

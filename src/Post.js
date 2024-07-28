@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from './Firebase/Firebase';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { Analytics } from "@vercel/analytics/react"
+
 
 function BlogPost() {
   const location = useLocation();
@@ -101,6 +103,7 @@ function BlogPost() {
           </div>
         )}
       </div>
+      <Analytics/>
     </div>
   );
 }

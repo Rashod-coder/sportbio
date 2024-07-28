@@ -45,10 +45,9 @@ function Footer() {
         bottom: '0',
         width: '100%',
         backgroundColor: '#f0f8ff',
-       
       }}
     >
-      <div className="container" id='footer'>
+      <div className="container" id="footer">
         <div className="row mt-4">
           <div className="col-lg-12 mx-auto">
             <h2
@@ -169,7 +168,8 @@ function Footer() {
                 type="submit"
                 className="btn btn-primary"
                 style={{
-                  background: 'linear-gradient(90deg, rgba(216,247,255,1) 0%, rgba(206,227,250,1) 35%, rgba(0,212,255,1) 100%)',
+                  background:
+                    'linear-gradient(90deg, rgba(216,247,255,1) 0%, rgba(206,227,250,1) 35%, rgba(0,212,255,1) 100%)',
                   border: 'none',
                   color: '#fff',
                   padding: '10px 20px',
@@ -180,15 +180,17 @@ function Footer() {
               </button>
             </form>
             {feedback && (
-              
-              <div class="alert alert-success" role="alert">
-  {feedback}
-</div>
+              <div className="alert alert-success mt-3" role="alert">
+                {feedback}
+              </div>
             )}
           </div>
         </div>
-        <hr></hr>
+
+        <hr />
+
         <div className="row align-items-center mt-5">
+          {/* Top Row */}
           <div className="col-md-4 text-center text-md-start mb-3 mb-md-0">
             <img
               src={sportLogo}
@@ -261,11 +263,15 @@ function Footer() {
             </ul>
           </div>
         </div>
-        <div
-          className="text-center mt-4"
-          style={{ color: '#333', fontSize: '1rem' }}
-        >
-          © 2024 Sport Injury Bio
+
+        {/* Bottom Row */}
+        <div className="row mt-4">
+          <div
+            className="col text-center"
+            style={{ color: '#333', fontSize: '1rem' }}
+          >
+            © 2024 Sport Injury Bio
+          </div>
         </div>
       </div>
     </div>
