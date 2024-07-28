@@ -6,6 +6,7 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import RequestRoleChange from './verify';
+import ViewMessages from './messages';
 
 
 function Dashboard() {
@@ -341,10 +342,14 @@ const [userEmail, setUserEmail] = useState('');
                 <RequestRoleChange userId={userId} userEmail={userEmail} userName={userName} />
               </div>
             )}
+
           </>
+          
         ) : (
           <p>Redirecting to login...</p>
         )}
+              <ViewMessages />
+
       </div>
     </div>
   );
