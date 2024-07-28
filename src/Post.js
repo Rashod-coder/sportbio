@@ -118,7 +118,38 @@ function BlogPost() {
         ) : post ? (
           <div>
             
-                <FaTimes onClick={() => navigate('/blogs')} />
+            <button 
+  style={{
+    backgroundColor: 'transparent',
+    border: 'none',
+    cursor: 'pointer',
+    padding: '8px',
+    borderRadius: '50%',
+    boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    transition: 'background-color 0.3s, box-shadow 0.3s',
+    outline: 'none'
+  }}
+  onClick={() => navigate('/blogs')}
+  aria-label="Close"
+  onMouseEnter={(e) => {
+    e.currentTarget.style.backgroundColor = '#f0f0f0'; 
+    e.currentTarget.style.boxShadow = '0 4px 8px rgba(0,0,0,0.2)'; 
+  }}
+  onMouseLeave={(e) => {
+    e.currentTarget.style.backgroundColor = 'transparent';
+    e.currentTarget.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)'; 
+  }}
+>
+  <FaTimes 
+    style={{
+      fontSize: '20px',
+      color: '#333'
+    }} 
+  />
+</button>
                 
             <div className="row mb-4">
               <div className="col-md-12">
