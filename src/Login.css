@@ -1,10 +1,15 @@
 /* src/Login.css */
 .login-background {
     background: rgb(38,38,115);
-background: radial-gradient(circle, rgba(38,38,115,1) 9%, rgba(95,204,232,1) 72%);
+    background: radial-gradient(circle, rgba(38,38,115,1) 9%, rgba(95,204,232,1) 72%);
     height: 100vh; /* Full viewport height */
     display: flex;
     justify-content: center;
     align-items: center;
   }
   
+  form input::placeholder {
+    color: rgba(0, 0, 0, 0.5); /* Light gray color for the placeholder */
+    font-weight: bold; /* Make placeholder text bold */
+    font-size: 1.1rem; /* Slightly larger font size for better visibility */
+}

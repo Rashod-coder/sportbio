@@ -1,10 +1,15 @@
-// src/Login.js
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Ensure Bootstrap CSS is imported
 import { useNavigate } from 'react-router-dom';
-import { onAuthStateChanged, signInWithEmailAndPassword, setPersistence, browserLocalPersistence } from 'firebase/auth';
+import './Login.css';
+import { FaUser, FaLock } from 'react-icons/fa';
+import {
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  setPersistence,
+  browserLocalPersistence,
+} from 'firebase/auth';
 import { auth } from './Firebase/Firebase';
-import './Login.css'
 
 function Login() {
   const navigate = useNavigate();
@@ -45,65 +50,113 @@ function Login() {
   };
 
   return (
-    <div className='login-background'>
-    <div
-      className="container d-flex justify-content-center align-items-center min-vh-100"
-       // Blue background
-    >
-      <div
-        className="p-4  rounded shadow"
-        style={{
-          maxWidth: '450px', // Max width for larger screens
-          width: '100%',     // Full width for smaller screens
-          padding: '4rem',   // Padding to make it larger
-          height: 'auto',
-          minHeight: '500px',
-          backgroundColor: 'rgba(255, 255, 255, 0.5)'   // Adjust height to fit content
-        }}
-      >
-        <form className="login100-form" onSubmit={handleLogin}>
-          <div className="text-center mb-4">
-            <span className="login100-form-logo" style={{ fontSize: '3rem', color: '#000' }}>
-              <i className="zmdi zmdi-landscape"></i>
-            </span>
-          </div>
-          <h2 className="text-center mb-4" style={{ color: '#000' }}>Login</h2>
-          {error && <div className="alert alert-danger">{error}</div>}
-          <div className="form-group mb-4">
-            <input
-              className="form-control form-control-lg"
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              style={{ borderColor: '#000', color: '#000' }}
-            />
-          </div>
-          <div className="form-group mb-4">
-            <input
-              className="form-control form-control-lg"
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              style={{ borderColor: '#000', color: '#000' }}
-            />
-          </div>
-          <div className="text-center mb-4 mt-4 py-5">
-            <button style={{ width: '300px', backgroundColor: '#007bff', color: '#fff' }} className="btn btn-primary btn-lg" type="submit">
+    <div className="login-background">
+      <div className="container d-flex justify-content-center align-items-center min-vh-100">
+        <div
+          className="p-4 rounded shadow"
+          style={{
+            maxWidth: '450px', // Max width for larger screens
+            width: '100%', // Full width for smaller screens
+            padding: '4rem', // Padding to make it larger
+            height: 'auto',
+            minHeight: '500px',
+            backgroundColor: 'rgba(255, 255, 255, 0.5)', // Adjust height to fit content
+          }}
+        >
+          <form className="login100-form" onSubmit={handleLogin}>
+            <div className="text-center mb-4">
+              <span
+                className="login100-form-logo"
+                style={{ fontSize: '3rem', color: '#000' }}
+              >
+                <i className="zmdi zmdi-landscape"></i>
+              </span>
+            </div>
+            <h2 className="text-center mb-4" style={{ color: '#000' }}>
               Login
-            </button>
-          </div>
-          <div className="text-center">
-            <a className="text-muted" href="/register" style={{ color: '#000', textDecoration: 'none' }}>
-              Don't have an account? Sign up here
-            </a>
-          </div>
-        </form>
+            </h2>
+            {error && <div className="alert alert-danger">{error}</div>}
+            <div className="form-group mb-4" style={{ position: 'relative' }}>
+              <FaUser
+                style={{
+                  position: 'absolute',
+                  top: '50%',
+                  left: '10px',
+                  transform: 'translateY(-50%)',
+                  color: '#000',
+                }}
+              />
+              <input
+                type="email"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                style={{
+                  width: '100%',
+                  padding: '10px 10px 10px 40px', // Padding to make space for the icon
+                  fontSize: '1rem',
+                  color: '#000',
+                  border: 'none',
+                  borderBottom: '2px solid #000',
+                  outline: 'none',
+                  background: 'transparent',
+                }}
+              />
+            </div>
+            <div className="form-group mb-4" style={{ position: 'relative' }}>
+              <FaLock
+                style={{
+                  position: 'absolute',
+                  top: '50%',
+                  left: '10px',
+                  transform: 'translateY(-50%)',
+                  color: '#000',
+                }}
+              />
+              <input
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                style={{
+                  width: '100%',
+                  padding: '10px 10px 10px 40px', // Padding to make space for the icon
+                  fontSize: '1rem',
+                  color: '#000',
+                  border: 'none',
+                  borderBottom: '2px solid #000',
+                  outline: 'none',
+                  background: 'transparent',
+                }}
+              />
+            </div>
+            <div className="text-center mb-4 mt-4 py-5">
+              <button
+                style={{
+                  width: '300px',
+                  backgroundColor: '#007bff',
+                  color: '#fff',
+                }}
+                className="btn btn-primary btn-lg"
+                type="submit"
+              >
+                Login
+              </button>
+            </div>
+            <div className="text-center">
+              <a
+                className="text-muted"
+                href="/register"
+                style={{ color: '#000', textDecoration: 'none' }}
+              >
+                Don't have an account? Sign up here
+              </a>
+            </div>
+          </form>
+        </div>
       </div>
-    </div>
     </div>
   );
 }

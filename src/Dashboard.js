@@ -119,7 +119,6 @@ function Dashboard() {
 
   const handleRejectRequest = async (verificationId) => {
     try {
-      // Delete the verification request
       const verificationDoc = doc(db, 'verification', verificationId);
       await deleteDoc(verificationDoc);
   
@@ -131,22 +130,36 @@ function Dashboard() {
 
   const handleRoleChange = async (verificationId, userId, newRole) => {
     try {
-      // Update the user role
       const userDoc = doc(db, 'users', userId);
       await updateDoc(userDoc, { accountLevel: newRole });
-
-      // Delete the verification request
+      window.alert(`User role updated to ${newRole}`)
       const verificationDoc = doc(db, 'verification', verificationId);
       await deleteDoc(verificationDoc);
 
-      console.log(`User role updated to ${newRole} and verification request deleted`);
+      window.location.reload();
+
     } catch (error) {
       console.error('Error updating role or deleting request: ', error);
     }
   };
+  
+  const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  const handleRemoveFromTeam = async (userId) => {
+    try {
+      const userDoc = doc(db, 'users', userId);
+      await updateDoc(userDoc, { accountLevel: 'basic' });
+      window.alert("Member removed from team")
+      window.location.reload();
+
+    } catch (error) {
+      console.error('Error removing from team: ', error);
+    }
+  };
+
+
 
   return (
-    <div className="min-vh-100 d-flex flex-column align-items-center" style={{ backgroundColor: '#e1edf7' }}>
+    <div className="min-vh-100 d-flex flex-column align-items-center" style={{ backgroundColor: '#edf4fa' }}>
       <div className="container mt-5">
         {loading ? (
           <div className="d-flex justify-content-center align-items-center min-vh-100">
@@ -160,10 +173,19 @@ function Dashboard() {
           </div>
         ) : authenticated ? (
           <>
-            <h1 className="display-4 text-center mb-4" style={{ color: '#003366' }}>Welcome, {userName}!</h1>
-            <p className="lead text-center" style={{ color: '#003366' }}>
-              Current account level: <strong>{accountLevel}</strong>
-            </p>
+            <h1 className="display-4 text-center mb-4" style={{ color: '#003366' }}>Welcome {userName}!</h1>
+            <div className='container'>
+              <div className='row'>
+                <div className='col-sm-4'>
+                <p className="display-5 text-center" style={{ color: '#003366' }}>
+                  Current Account Level: <strong>{accountLevel}</strong>
+                </p>
+                
+                </div>
+                
+              </div>
+            </div>
+            
 
             {(accountLevel === 'admin' || accountLevel === 'staff') && (
               <>
@@ -172,23 +194,39 @@ function Dashboard() {
                   {teamMembers.length > 0 ? (
                     <table className="table table-bordered" style={{ borderColor: '#003366' }}>
                       <thead>
-                        <tr style={{ backgroundColor: '#003366', color: 'white' }}>
-                          <th scope="col">First Name</th>
-                          <th scope="col">Last Name</th>
-                          <th scope="col">Email</th>
-                          <th scope="col">Role</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {teamMembers.map(member => (
-                          <tr key={member.id}>
-                            <td>{member.firstName}</td>
-                            <td>{member.lastName}</td>
-                            <td>{member.email}</td>
-                            <td>{member.accountLevel}</td>
-                          </tr>
-                        ))}
-                      </tbody>
+  <tr style={{ backgroundColor: '#003366', color: 'white' }}>
+    <th scope="col">Member Name</th>
+    <th scope="col">Email</th>
+    <th scope="col">Role</th>
+    <th scope="col">Action</th> 
+  </tr>
+</thead>
+<tbody>
+  {teamMembers.map(member => (
+    <tr key={member.id}>
+      <td>{member.firstName} {member.lastName}</td>
+      <td>{member.email}</td>
+      <td>{member.accountLevel}</td>
+      <td>
+        {accountLevel === 'admin' && member.accountLevel !== 'admin' ? (
+          <button
+            className="btn btn-danger btn-sm"
+            onClick={() => handleRemoveFromTeam(member.id)}
+          >
+            Remove from Team
+          </button>
+        ) : (
+          <button
+            className="btn btn-danger btn-sm"
+            disabled
+          >
+            Remove from Team
+          </button>
+        )}
+      </td>
+    </tr>
+  ))}
+</tbody>
                     </table>
                   ) : (
                     <p>No staff members found.</p>
@@ -241,26 +279,26 @@ function Dashboard() {
                         Content
                       </label>
                       <ReactQuill
-  theme="snow"
-  value={postContent}
-  onChange={setPostContent}
-  modules={{
-    toolbar: [
-      [{ header: [1, 2, false] }],
-      ['bold', 'italic', 'underline', 'strike'],
-      [{ list: 'ordered' }, { list: 'bullet' }],
-      ['link', 'image'], // Add 'image' here to include the image upload button
-      ['clean'],
-    ],
-  }}
-  style={{
-    borderColor: '#003366',
-    height: '200px',
-    overflow: 'auto',
-    backgroundColor: 'white',
-  }}
-  placeholder="Enter your content here"
-/>
+                      theme="snow"
+                      value={postContent}
+                      onChange={setPostContent}
+                      modules={{
+                        toolbar: [
+                          [{ header: [1, 2, false] }],
+                          ['bold', 'italic', 'underline', 'strike'],
+                          [{ list: 'ordered' }, { list: 'bullet' }],
+                          ['link', 'image'], 
+                          ['clean'],
+                        ],
+                      }}
+                      style={{
+                        borderColor: '#003366',
+                        height: '200px',
+                        overflow: 'auto',
+                        backgroundColor: 'white',
+                      }}
+                      placeholder="Enter your content here"
+                    />
                     </div>
                     <button
                       type="submit"
@@ -324,7 +362,7 @@ function Dashboard() {
               </>
             )}
 
-            <div className="mt-5">
+            <div>
               <RequestRoleChange userId={userId} userName={userName} userEmail={userEmail} />
             </div>
             <div className="mt-5 mb-5">

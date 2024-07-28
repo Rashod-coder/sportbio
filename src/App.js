@@ -50,7 +50,7 @@ function Layout() {
   const location = useLocation();
   
   // List of paths where the Footer should not be displayed
-  const noFooterPaths = ['/dashboard', '/login', '/register'];
+  const noFooterPaths = ['/dashboard', '/login', '/register', '/blogs'];
   
   // Check if the current path starts with `/blogs/`
   const isBlogPage = location.pathname.startsWith('/blogs/');

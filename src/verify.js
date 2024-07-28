@@ -101,8 +101,8 @@ function RequestRoleChange() {
   }
 
   return (
-    <div className="bg-light min-vh-100 d-flex flex-column align-items-center justify-content-center" style={{ backgroundColor: 'black' }}>
-      <div className="container p-4 shadow rounded" style={{ maxWidth: '600px', backgroundColor: '#ffffff', borderRadius: '8px' }}>
+    <div className="d-flex flex-column align-items-center justify-content-center">
+      <div className="container p-4 shadow rounded" style={{ maxWidth: '600px', backgroundColor: 'rgba(219, 209, 214, 0.2)', borderRadius: '8px' }}>
         <h2 className="mb-4 text-center" style={{ color: '#333' }}>Request Role Change</h2>
         <p className="lead text-center" style={{ color: '#555' }}>
           Current role: <strong>{currentRole}</strong>
@@ -119,7 +119,7 @@ function RequestRoleChange() {
               onChange={(e) => setRequestedLevel(e.target.value)}
               style={{ borderColor: '#ddd', borderRadius: '1px', boxShadow: 'none' }}
               required
-              disabled={hasPendingRequest} // Disable if there's an existing request
+              disabled={hasPendingRequest} 
             >
               <option value="" disabled>Select a role</option>
               <option value="staff">Staff</option>
@@ -130,7 +130,7 @@ function RequestRoleChange() {
             type="submit"
             className="btn btn-primary btn-lg mt-3 w-100"
             style={{ backgroundColor: '#007bff', borderColor: '#007bff', borderRadius: '4px', boxShadow: 'none' }}
-            disabled={hasPendingRequest} // Disable button if there's an existing request
+            disabled={hasPendingRequest} 
           >
             {hasPendingRequest ? 'Request Pending' : 'Submit Request'}
           </button>

@@ -81,6 +81,11 @@ function ViewMessages() {
     }
   };
 
+  // Conditionally render nothing if the user is not an admin
+  if (!isAdmin) {
+    return null;
+  }
+
   return (
     <div
       className="container mt-5"
@@ -99,10 +104,15 @@ function ViewMessages() {
             <span className="visually-hidden">Loading...</span>
           </div>
         </div>
-      ) : isAdmin ? (
-        <div style={{overflowY: 'scroll'}}>
-          <h3 className='display-6 text-center'>View incoming messages from users who filled out the contact field</h3>
-              <p className='text-center'>Once you have reviewed the message and taken actions, you can delete the message.</p>
+      ) : (
+        <div style={{ overflowY: "scroll" }}>
+          <h3 className="display-6 text-center">
+            View incoming messages from users who filled out the contact field
+          </h3>
+          <p className="text-center">
+            Once you have reviewed the message and taken actions, you can delete
+            the message.
+          </p>
           {messages.map((message) => (
             <div
               key={message.id}
@@ -148,10 +158,6 @@ function ViewMessages() {
             </div>
           ))}
         </div>
-      ) : (
-        <p className="text-center mt-5" style={{ color: "#333" }}>
-          Only admins can view messages.
-        </p>
       )}
     </div>
   );

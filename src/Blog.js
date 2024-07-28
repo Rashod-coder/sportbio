@@ -98,7 +98,7 @@ function BlogPage() {
   };
 
   return (
-    <div style={{backgroundColor: '#f0f0eb', minHeight: '100vh' }}> 
+    <div style={{backgroundColor: '#f0faff', minHeight: '100vh' }}> 
     <div className="container">
       <div className="row justify-content-center mb-4">
         <div className="col-12 col-md-8">
