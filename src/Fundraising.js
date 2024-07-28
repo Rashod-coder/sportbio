@@ -11,11 +11,11 @@ function Fundraiser() {
         className="container text-center"
         style={{
           minHeight: '100vh',
-          padding: '40px 100px', // Increased horizontal padding
+          padding: '40px 100px', 
           backgroundColor: '#f8f9fa',
           borderRadius: '10px',
-          boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', // Add a subtle shadow
-          marginBottom: '20px', // Add some spacing below the border
+          boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', 
+          marginBottom: '20px', 
         }}
       >
         <h1 className="display-4 mt-4 text-primary font-weight-bold">
@@ -33,7 +33,7 @@ function Fundraiser() {
         </h3>
         <p
           className="mt-3 text-secondary"
-          style={{ fontSize: '1.1rem', lineHeight: '1.8' }} // Increase font size and line height
+          style={{ fontSize: '1.1rem', lineHeight: '1.8' }} 
         >
           Blood donations play a crucial role in supporting athletes and
           community members alike. During sports injuries, rapid access to blood

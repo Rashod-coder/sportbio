@@ -81,7 +81,6 @@ function ViewMessages() {
     }
   };
 
-  // Conditionally render nothing if the user is not an admin
   if (!isAdmin) {
     return null;
   }
@@ -90,11 +89,11 @@ function ViewMessages() {
     <div
       className="container mt-5"
       style={{
-        backgroundColor: "rgba(255, 255, 255, 0.1)", // More transparent white
+        backgroundColor: "rgba(255, 255, 255, 0.1)", 
         borderRadius: "15px",
         padding: "20px",
-        boxShadow: "0 8px 32px rgba(0, 0, 0, 0.37)", // Enhanced shadow for a 3D effect
-        backdropFilter: "blur(8px)", // Adds a blur effect for a glassy look
+        boxShadow: "0 8px 32px rgba(0, 0, 0, 0.37)",
+        backdropFilter: "blur(8px)", 
         border: "1px solid rgba(255, 255, 255, 0.18)",
       }}
     >
@@ -124,8 +123,8 @@ function ViewMessages() {
                     : "rgba(255, 255, 255, 0.2)",
                 borderRadius: "10px",
                 border: "1px solid rgba(255, 255, 255, 0.3)",
-                boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)", // Subtle shadow on cards
-                transition: "background-color 0.3s, box-shadow 0.3s", // Smooth transition effects
+                boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)", 
+                transition: "background-color 0.3s, box-shadow 0.3s",
               }}
             >
               <div className="card-body">

@@ -1,8 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { doc, getDoc } from 'firebase/firestore';
+import { doc, getDoc, updateDoc, deleteDoc } from 'firebase/firestore';
 import { db } from './Firebase/Firebase';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Analytics } from "@vercel/analytics/react"
+import { getAuth } from 'firebase/auth';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css'; // Import Quill's CSS for styling
+import { FaPen } from 'react-icons/fa'; // Import the pencil icon
+import { Analytics } from "@vercel/analytics/react";
+import { FaTimes } from 'react-icons/fa';
 
 
 function BlogPost() {
@@ -10,7 +15,11 @@ function BlogPost() {
   const postId = location.pathname.split('/')[2];
   const [post, setPost] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedContent, setEditedContent] = useState('');
   const navigate = useNavigate();
+  const auth = getAuth();
+  const currentUser = auth.currentUser;
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -19,7 +28,9 @@ function BlogPost() {
         const docSnap = await getDoc(docRef);
 
         if (docSnap.exists()) {
-          setPost(docSnap.data());
+          const postData = docSnap.data();
+          setPost(postData);
+          setEditedContent(postData.content);
         } else {
           console.error('No such document!');
         }
@@ -32,6 +43,48 @@ function BlogPost() {
 
     fetchPost();
   }, [postId]);
+
+  const handleEditClick = () => {
+    setIsEditing(true);
+  };
+
+  const handleSaveClick = async () => {
+    if (currentUser && post && currentUser.uid === post.userID) {
+      try {
+        const docRef = doc(db, 'blogs', postId);
+        await updateDoc(docRef, { content: editedContent });
+        setPost(prev => ({ ...prev, content: editedContent }));
+        setIsEditing(false);
+      } catch (error) {
+        console.error('Error updating document: ', error);
+      }
+    } else {
+      console.error('User not authorized to edit this post.');
+    }
+  };
+
+  const handleDelete = async () => {
+    if (currentUser && post && currentUser.uid === post.userID) {
+      const confirmDelete = window.confirm("Are you sure you want to delete this post?");
+      
+      if (confirmDelete) {
+        try {
+          const docRef = doc(db, 'blogs', postId);
+          await deleteDoc(docRef);
+          navigate('/blogs'); 
+        } catch (error) {
+          console.error('Error deleting document: ', error);
+        }
+      }
+    } else {
+      console.error('User not authorized to delete this post.');
+    }
+  };
+  
+  const handleCancelClick = () => {
+    setIsEditing(false);
+    setEditedContent(post.content);
+  };
 
   return (
     <div style={{ background: 'white', minHeight: '100vh', padding: '20px' }}>
@@ -64,31 +117,66 @@ function BlogPost() {
           </div>
         ) : post ? (
           <div>
-            <div className="row">
-              <div className="col-lg-4">
-                <div className="col-md-12 text-center">
-                  <button className="btn btn-primary" onClick={() => navigate('/blogs')}>
-                    Back to Blogs
-                  </button>
-                </div>
-              </div>
-            </div>
+            
+                <FaTimes onClick={() => navigate('/blogs')} />
+                
             <div className="row mb-4">
               <div className="col-md-12">
                 <h1 className="text-center mt-5" style={{ wordWrap: 'break-word' }}>
                   {post.title}
                 </h1>
               </div>
-
               <div className="col-md-12 text-center mt-3">
                 <p style={{ wordWrap: 'break-word' }}>Quick Summary: {post.summary}</p>
               </div>
+            </div>
+            <div className='row mb-4'>
+              {currentUser && currentUser.uid === post.userID && (
+                <div className="col-sm-12 text-center">
+                  <div className="d-flex flex-column flex-sm-row justify-content-center">
+                    <button className="btn btn-primary me-sm-2 mb-2 mb-sm-0" onClick={handleEditClick} style={{maxWidth: '100%'}}>
+                      <FaPen /> Edit Post
+                    </button>
+                    <button className="btn btn-danger ms-sm-2" onClick={handleDelete}>
+                      Delete Post
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
             <hr />
             <div className="row">
               <div className="col-md-12">
                 <h4>By: {post.author}</h4>
-                <div className="content" dangerouslySetInnerHTML={{ __html: post.content }}></div>
+                {isEditing ? (
+                  <div>
+                    <ReactQuill
+                      value={editedContent}
+                      onChange={setEditedContent}
+                      modules={{
+                        toolbar: [
+                          [{ header: [1, 2, false] }],
+                          ['bold', 'italic', 'underline', 'strike'],
+                          [{ list: 'ordered' }, { list: 'bullet' }],
+                          ['link', 'image'], 
+                          ['clean'],
+                        ],
+                      }}                      formats={editorFormats}
+                      style={{ height: '400px' }}
+                      
+                    />
+                    <button className="btn btn-success mt-5" onClick={handleSaveClick} >
+                      Save
+                    </button>
+                    <button className="btn btn-secondary mt-5 ms-2" onClick={handleCancelClick}>
+                      Cancel
+                    </button>
+                  </div>
+                ) : (
+                  <div>
+                    <div className="content" dangerouslySetInnerHTML={{ __html: post.content }}></div>
+                  </div>
+                )}
               </div>
               <div className="col-md-12 text-center">
                 <button className="btn btn-primary" onClick={() => navigate('/blogs')}>
@@ -99,7 +187,7 @@ function BlogPost() {
           </div>
         ) : (
           <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '90vh' }}>
-            <p className="text-center display-1 justify-content-center">404 Page Not Found</p>
+            <p className="text-center display-1">404 Page Not Found</p>
           </div>
         )}
       </div>
@@ -107,5 +195,11 @@ function BlogPost() {
     </div>
   );
 }
+
+
+
+const editorFormats = [
+  'header', 'font', 'list', 'bullet', 'bold', 'italic', 'underline', 'color', 'background', 'align', 'link', 'image'
+];
 
 export default BlogPost;

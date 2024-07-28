@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { signOut } from 'firebase/auth';
-import { auth } from './Firebase/Firebase'; // Ensure the path to your Firebase configuration is correct
-import Logo from './finalLogo.png'; // Import the logo image
+import { auth } from './Firebase/Firebase'; 
+import Logo from './finalLogo.png'; 
 
 function Navbar() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    // Set up an authentication listener to check if the user is logged in or not
+    
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setUser(user);
     });
 
-    return () => unsubscribe(); // Clean up the listener on component unmount
+    return () => unsubscribe(); 
   }, []);
 
   const handleLogout = async () => {
@@ -44,7 +44,7 @@ function Navbar() {
           <span className="navbar-toggler-icon"></span>
         </button>
         <div 
-          className="offcanvas offcanvas-start text-bg-dark" // Offcanvas starts from the left
+          className="offcanvas offcanvas-start text-bg-dark" 
           tabIndex="-1" 
           id="offcanvasNavbar2" 
           aria-labelledby="offcanvasNavbar2Label"

@@ -36,6 +36,7 @@ function Dashboard() {
             const { firstName, lastName, accountLevel } = userSnapshot.data();
             setUserName(`${firstName} ${lastName}`);
             setAccountLevel(accountLevel);
+            setUserId(user.uid)
           } else {
             console.log('No such document!');
           }
@@ -78,8 +79,9 @@ function Dashboard() {
         content: postContent,
         author: userName,
         createdAt: new Date(),
+        userID: userId
       };
-
+      console.log("User Id published:" + userId)
       await addDoc(collection(db, 'blogs'), newPost);
 
       console.log('Post submitted:', newPost);

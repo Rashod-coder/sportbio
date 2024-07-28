@@ -27,7 +27,6 @@ function RequestRoleChange() {
           setCurrentRole(accountLevel);
           setUserId(user.uid);
 
-          // Check if there's an existing role change request
           await checkForExistingRequest(user.uid);
         } else {
           console.log('No such document!');
@@ -42,7 +41,6 @@ function RequestRoleChange() {
       const requestsQuery = query(collection(db, 'verification'), where('userId', '==', userId));
       const requestSnapshots = await getDocs(requestsQuery);
 
-      // Set hasPendingRequest to true if there are any existing requests
       setHasPendingRequest(!requestSnapshots.empty);
     };
 
@@ -95,9 +93,8 @@ function RequestRoleChange() {
     );
   }
 
-  // Conditionally render the component for 'basic' and 'staff' users
   if (currentRole !== 'basic' && currentRole !== 'staff') {
-    return null; // Don't render anything for other roles
+    return null; 
   }
 
   return (

@@ -1,12 +1,11 @@
 // src/BlogPage.js
 import React from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css'; // Ensure Bootstrap CSS is imported
+import 'bootstrap/dist/css/bootstrap.min.css'; 
 import logo from './givenLogo.JPG';
 import { Analytics } from "@vercel/analytics/react"
 
 
 function Home() {
-  // Scroll to footer function
   
 
   return (

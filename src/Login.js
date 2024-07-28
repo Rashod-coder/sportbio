@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css'; // Ensure Bootstrap CSS is imported
+import 'bootstrap/dist/css/bootstrap.min.css'; 
 import { useNavigate } from 'react-router-dom';
 import './Login.css';
 import { FaUser, FaLock } from 'react-icons/fa';
@@ -19,13 +19,12 @@ function Login() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    // Set Firebase Authentication persistence
     setPersistence(auth, browserLocalPersistence)
       .then(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
           if (user) {
             setUser(user);
-            navigate('/dashboard'); // Redirect to Dashboard if user is authenticated
+            navigate('/dashboard'); 
           } else {
             setUser(null);
           }
@@ -42,10 +41,10 @@ function Login() {
     e.preventDefault();
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      navigate('/dashboard'); // Redirect to Dashboard on successful login
+      navigate('/dashboard'); 
     } catch (err) {
       setError('Incorrect login details. Please try again.');
-      setTimeout(() => setError(''), 5000); // Clear error message after 5 seconds
+      setTimeout(() => setError(''), 5000); 
     }
   };
 
@@ -55,12 +54,12 @@ function Login() {
         <div
           className="p-4 rounded shadow"
           style={{
-            maxWidth: '450px', // Max width for larger screens
-            width: '100%', // Full width for smaller screens
-            padding: '4rem', // Padding to make it larger
+            maxWidth: '450px', 
+            width: '100%', 
+            padding: '4rem', 
             height: 'auto',
             minHeight: '500px',
-            backgroundColor: 'rgba(255, 255, 255, 0.5)', // Adjust height to fit content
+            backgroundColor: 'rgba(255, 255, 255, 0.5)', 
           }}
         >
           <form className="login100-form" onSubmit={handleLogin}>
@@ -94,7 +93,7 @@ function Login() {
                 required
                 style={{
                   width: '100%',
-                  padding: '10px 10px 10px 40px', // Padding to make space for the icon
+                  padding: '10px 10px 10px 40px', 
                   fontSize: '1rem',
                   color: '#000',
                   border: 'none',
@@ -122,7 +121,7 @@ function Login() {
                 required
                 style={{
                   width: '100%',
-                  padding: '10px 10px 10px 40px', // Padding to make space for the icon
+                  padding: '10px 10px 10px 40px', 
                   fontSize: '1rem',
                   color: '#000',
                   border: 'none',
