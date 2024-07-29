@@ -1,5 +1,5 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes, useLocation, Outlet } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { BrowserRouter as Router, Route, Routes, useLocation, Outlet, Link } from 'react-router-dom';
 import Navbar from './Navbar';
 import Blog from './Blog';
 import About from './About';
@@ -18,7 +18,7 @@ import { Analytics } from "@vercel/analytics/react";
 // Define the NotFound component directly here
 const NotFound = () => {
   return (
-    <div style={{ textAlign: 'center', padding: '50px', minHeight:'90vh' }}>
+    <div style={{ textAlign: 'center', padding: '50px', minHeight: '90vh' }}>
       <h1 className='display-3'>404</h1>
       <p>Page Not Found</p>
     </div>
@@ -31,16 +31,16 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Layout />}>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/blogs" element={<Blog />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/volunteer" element={<Fundraiser />} />
-            <Route path="/blogs/:id" element={<Posts />} />
+            <Route index element={<Home />} />
+            <Route path="about" element={<About />} />
+            <Route path="blogs" element={<Blog />} />
+            <Route path="login" element={<Login />} />
+            <Route path="register" element={<Register />} />
+            <Route path="volunteer" element={<Fundraiser />} />
+            <Route path="blogs/:id" element={<Posts />} />
 
             <Route
-              path="/dashboard"
+              path="dashboard"
               element={
                 <ProtectedRoute>
                   <Dashboard />
@@ -60,9 +60,19 @@ function App() {
 
 function Layout() {
   const location = useLocation();
-  
+
+  useEffect(() => {
+    // Scroll to the About section if the path is '/about' and we have a hash
+    if (location.hash) {
+      const element = document.getElementById(location.hash.slice(1));
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  }, [location]);
+
   // List of paths where the Footer should not be displayed
-  const noFooterPaths = ['/dashboard', '/login', '/register', '/blogs', '*'];
+  const noFooterPaths = ['/dashboard', '/login', '/register'];
   
   // Check if the current path starts with `/blogs/`
   const isBlogPage = location.pathname.startsWith('/blogs/');

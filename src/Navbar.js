@@ -61,7 +61,7 @@ function Navbar() {
           <div className="offcanvas-body">
             <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
               <li className="nav-item">
-                <a className="nav-link text-light" style={{fontSize: '20px'}} href="#about">About</a>
+                <a className="nav-link text-light" style={{fontSize: '20px'}} href="/#about">About</a>
               </li>
               <li className="nav-item dropdown">
                 <a style={{ color: 'white', fontSize: '20px' }} className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
