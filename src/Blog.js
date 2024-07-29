@@ -5,7 +5,6 @@ import { doc, getDocs, collection } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import { Analytics } from "@vercel/analytics/react"
 
-
 function BlogPage() {
   const navigate = useNavigate();
 
@@ -38,13 +37,15 @@ function BlogPage() {
     // For now, we'll just filter the blogs on each render based on searchQuery
   };
 
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', {
-      month: '2-digit',
-      day: '2-digit',
-      year: 'numeric'
-    });
+  const formatDate = (timestamp) => {
+    if (timestamp && timestamp.toDate) {
+      const date = timestamp.toDate(); // Convert Firestore Timestamp to Date
+      const day = String(date.getDate()).padStart(2, '0'); // Get day and pad with leading zero if necessary
+      const month = String(date.getMonth() + 1).padStart(2, '0'); // Get month (0-based) and pad
+      const year = String(date.getFullYear()).slice(-2); // Get last two digits of year
+      return `${month}.${day}.${year}`; // Construct formatted string
+    }
+    return 'Invalid Date'; // Fallback if conversion fails
   };
 
   const filteredBlogs = blogs.filter(blog => 
@@ -91,7 +92,7 @@ function BlogPage() {
     borderRadius: '4px',
     cursor: 'pointer',
     marginTop: 'auto',
-    color: 'blacl'
+    color: 'black'
   };
   const btnDarkHoverStyle = {
     backgroundColor: '#0056b3'
@@ -99,62 +100,62 @@ function BlogPage() {
 
   return (
     <div style={{backgroundColor: '#f0faff', minHeight: '100vh' }}> 
-    <div className="container">
-      <div className="row justify-content-center mb-4">
-        <div className="col-12 col-md-8">
-        <h1 className="text-center mt-4 mb-2">View Our Blogs</h1>
+      <div className="container">
+        <div className="row justify-content-center mb-4">
+          <div className="col-12 col-md-8">
+            <h1 className="text-center mt-4 mb-2">View Our Blogs</h1>
 
-          <form className="d-flex" onSubmit={handleSearch} role="search">
-            <input
-              className="form-control me-2"
-              type="search"
-              placeholder="Search Blogs"
-              aria-label="Search"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-            <button className="btn btn-primary" type="submit">
-              Search
-            </button>
-          </form>
-        </div>
-      </div>
-      {loading ? (
-        <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '50vh' }}>
-          <div className="spinner-border text-primary" role="status">
-            <span className="visually-hidden">Loading...</span>
+            <form className="d-flex" onSubmit={handleSearch} role="search">
+              <input
+                className="form-control me-2"
+                type="search"
+                placeholder="Search Blogs"
+                aria-label="Search"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+              <button className="btn btn-primary" type="submit">
+                Search
+              </button>
+            </form>
           </div>
         </div>
-      ) : (
-        <div className="row">
-          {filteredBlogs.length > 0 ? (
-            filteredBlogs.map(blog => (
-              <div key={blog.id} className="col-12 col-md-6 col-lg-4 mb-4 mt-5">
-                <div className="card" style={cardStyle}>
-                  <div className="card-body" style={cardBodyStyle}>
-                    <h5 className="card-title text-dark" style={cardTitleStyle}>{blog.title || 'No Title'}</h5>
-                    <h6 className="card-subtitle mb-2  text-dark" style={cardSubtitleStyle}>By {blog.author || 'Unknown'}</h6>
-                    <p className="card-text text-dark" style={summaryStyle}>{blog.summary || 'No Summary'}</p>
-                    <p className="card-text text-dark "><small className="text-dark">Date Published: {formatDate(blog.createdAt)}</small></p>
-                    <button className='text-dark'
-                      onClick={() => navigate("/blogs/" + blog.id)}
-                      style={btnDarkStyle}
-                      onMouseOver={(e) => e.currentTarget.style.backgroundColor = btnDarkHoverStyle.backgroundColor}
-                      onMouseOut={(e) => e.currentTarget.style.backgroundColor = btnDarkStyle.backgroundColor}
-                    >
-                      Read More
-                    </button>
+        {loading ? (
+          <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '50vh' }}>
+            <div className="spinner-border text-primary" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </div>
+          </div>
+        ) : (
+          <div className="row">
+            {filteredBlogs.length > 0 ? (
+              filteredBlogs.map(blog => (
+                <div key={blog.id} className="col-12 col-md-6 col-lg-4 mb-4 mt-5">
+                  <div className="card" style={cardStyle}>
+                    <div className="card-body" style={cardBodyStyle}>
+                      <h5 className="card-title text-dark" style={cardTitleStyle}>{blog.title || 'No Title'}</h5>
+                      <h6 className="card-subtitle mb-2  text-dark" style={cardSubtitleStyle}>By {blog.author || 'Unknown'}</h6>
+                      <p className="card-text text-dark" style={summaryStyle}>{blog.summary || 'No Summary'}</p>
+                      <p className="card-text text-dark "><small className="text-dark">Date Published: {formatDate(blog.createdAt)}</small></p>
+                      <button className='text-dark'
+                        onClick={() => navigate("/blogs/" + blog.id)}
+                        style={btnDarkStyle}
+                        onMouseOver={(e) => e.currentTarget.style.backgroundColor = btnDarkHoverStyle.backgroundColor}
+                        onMouseOut={(e) => e.currentTarget.style.backgroundColor = btnDarkStyle.backgroundColor}
+                      >
+                        Read More
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))
-          ) : (
-            <p className="text-center">No blogs found</p>
-          )}
-        </div>
-      )}
-    </div>
-    <Analytics/>
+              ))
+            ) : (
+              <p className="text-center">No blogs found</p>
+            )}
+          </div>
+        )}
+      </div>
+      <Analytics/>
     </div>
   );
 }
