@@ -15,7 +15,6 @@ import Posts from './Post';
 import './App.css';
 import { Analytics } from "@vercel/analytics/react";
 
-// Define the NotFound component directly here
 const NotFound = () => {
   return (
     <div style={{ textAlign: 'center', padding: '50px', minHeight: '90vh' }}>
@@ -48,7 +47,6 @@ function App() {
               }
             />
             
-            {/* 404 Route */}
             <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>
@@ -72,7 +70,7 @@ function Layout() {
   }, [location]);
 
   // List of paths where the Footer should not be displayed
-  const noFooterPaths = ['/dashboard', '/login', '/register'];
+  const noFooterPaths = ['/dashboard', '/login', '/register', '/blogs'];
   
   // Check if the current path starts with `/blogs/`
   const isBlogPage = location.pathname.startsWith('/blogs/');

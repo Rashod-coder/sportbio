@@ -44,7 +44,7 @@ function Footer() {
         position: 'relative',
         bottom: '0',
         width: '100%',
-        backgroundColor: '#f0f8ff',
+        backgroundColor: '#ccebff',
       }}
     >
       <div className="container" id="footer">
@@ -198,9 +198,7 @@ function Footer() {
               style={{ maxWidth: '150px', height: 'auto' }}
               className="mb-3"
             />
-            <p className="mb-0" style={{ color: '#333', fontSize: '1rem' }}>
-              <FaEnvelope className="me-2" /> info@sportinjurybio.com
-            </p>
+            
           </div>
           <div className="col-md-4 text-center">
             <a
@@ -253,7 +251,7 @@ function Footer() {
               </li>
               <li className="list-inline-item">
                 <a
-                  href="/blog"
+                  href="/blogs"
                   className="text-dark text-decoration-none"
                   style={{ fontSize: '1rem', color: '#333' }}
                 >
@@ -264,12 +262,14 @@ function Footer() {
           </div>
         </div>
 
-        {/* Bottom Row */}
         <div className="row mt-4">
+          <div className='col-lg-4 col-sm-12-mt-2 text-center'>
+          <FaEnvelope className="me-2" />sportinjurybiology@gmail.com
+          </div>
           <div
-            className="col text-center"
+            className="col-lg-4 col-sm-12 text-center"
             style={{ color: '#333', fontSize: '1rem' }}
-          >
+          > 
             © 2024 Sport Injury Bio
           </div>
         </div>
