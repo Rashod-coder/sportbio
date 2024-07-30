@@ -1,0 +1,40 @@
+/* Container for the scrolling alert */
+.scrolling-alert-container {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    background-color: #cce5ff; /* Cool blue background*/
+    border-bottom: 2px solid #004085; /* Darker blue border */
+  }
+  
+  /* Scrolling alert text */
+  .scrolling-alert {
+    display: inline-block;
+    white-space: nowrap;
+    padding: 10px;
+    box-sizing: border-box;
+    color: #004085; /* Dark blue text */
+    font-weight: bold;
+    animation: scroll-left 25s linear infinite;
+  }
+  
+  /* Keyframes for scrolling effect */
+  @keyframes scroll-left {
+    0% {
+      transform: translateX(100%);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+  
+  /* Styling for the new article section */
+  .new-article {
+    text-align: center;
+    padding: 10px;
+    background-color: #004085; /* Dark blue background */
+    color: #ffffff; /* White text */
+    border-bottom: 2px solid #cce5ff; /* Light blue border */
+    margin-bottom: 10px;
+  }
+  
