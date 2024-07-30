@@ -315,7 +315,7 @@ function Dashboard() {
                 <div className="mt-5 mb-5 p-4 shadow rounded" style={{ backgroundColor: 'rgba(255, 255, 255, 0.4)' }}>
                   <h2 className="mb-4" style={{ color: '#003366' }}>Team Verification Requests</h2>
                   {verificationRequests.length > 0 ? (
-                    <table className="table table-striped">
+                    <table className="table table-striped" style={{overflowX: 'auto'}}>
                     <thead>
                       <tr>
                         <th>Name</th>
