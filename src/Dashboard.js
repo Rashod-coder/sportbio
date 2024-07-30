@@ -191,7 +191,7 @@ function Dashboard() {
 
             {(accountLevel === 'admin' || accountLevel === 'staff') && (
               <>
-                <div className="mt-5 mb-5 p-4 shadow rounded" style={{ backgroundColor: '"rgba(255, 255, 255, 0.4)', overflowX: 'auto', display: 'block', overflowY: 'auto', height: '250px' }}>
+                <div className="mt-5 mb-5 p-4 shadow rounded" style={{ backgroundColor: '"rgba(255, 255, 255, 0.4)', overflowX: 'scroll', display: 'block', overflowY: 'scroll', height: '250px' }}>
                   <h2 className="mb-4" style={{ color: '#003366' }}>Team Members (Staff)</h2>
                   {teamMembers.length > 0 ? (
                     <table className="table table-bordered" style={{ borderColor: '#003366' }}>
