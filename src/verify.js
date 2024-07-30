@@ -122,7 +122,7 @@ function RequestRoleChange() {
               {currentRole === 'basic' && (
                 <>
                   <option value="staff">Staff</option>
-                  <option value="admin">admin</option>
+                  <option value="admin">Admin</option>
                 </>
               )}
               {currentRole === 'staff' && (

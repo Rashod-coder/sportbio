@@ -210,7 +210,7 @@ function Dashboard() {
       <td>{member.email}</td>
       <td>{member.accountLevel}</td>
       <td>
-        {accountLevel === 'admin' && member.accountLevel !== 'admin' ? (
+        {(userId === 'OWMO5Lym95MJzp65FI6F8PrdauM2' || userId === 'qZul2ubuegdty1PMZ65Cj7rukrp2') ? (
           <button
             className="btn btn-danger btn-sm"
             onClick={() => handleRemoveFromTeam(member.id)}
@@ -220,7 +220,8 @@ function Dashboard() {
         ) : (
           <button
             className="btn btn-danger btn-sm"
-            disabled
+            onClick={() => handleRemoveFromTeam(member.id)}
+            disabled={member.accountLevel === 'admin' || member.accountLevel === 'staff'}
           >
             Remove from Team
           </button>
@@ -229,6 +230,7 @@ function Dashboard() {
     </tr>
   ))}
 </tbody>
+
                     </table>
                   ) : (
                     <p>No staff members found.</p>
