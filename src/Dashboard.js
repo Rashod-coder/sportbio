@@ -7,6 +7,7 @@ import 'react-quill/dist/quill.snow.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import RequestRoleChange from './verify';
 import ViewMessages from './messages';
+import Bio from './Bio';
 import { Analytics } from "@vercel/analytics/react"
 
 function Dashboard() {
@@ -59,7 +60,7 @@ function Dashboard() {
         const q = query(collection(db, 'verification'));
         const unsubscribe = onSnapshot(q, (snapshot) => {
           const requests = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-          console.log('Fetched verification requests:', requests); // Debug log
+          console.log('Fetched verification requests:', requests); 
           setVerificationRequests(requests);
         });
 
@@ -134,6 +135,8 @@ function Dashboard() {
     try {
       const userDoc = doc(db, 'users', userId);
       await updateDoc(userDoc, { accountLevel: newRole });
+      const profileDoc = doc(db, 'profile', userId);
+      await updateDoc(profileDoc, { accountLevel: newRole });
       window.alert(`User role updated to ${newRole}`)
       const verificationDoc = doc(db, 'verification', verificationId);
       await deleteDoc(verificationDoc);
@@ -150,6 +153,8 @@ function Dashboard() {
     try {
       const userDoc = doc(db, 'users', userId);
       await updateDoc(userDoc, { accountLevel: 'basic' });
+      const profileDoc = doc(db, 'profile', userId);
+      await updateDoc(profileDoc, { accountLevel: 'basic' });
       window.alert("Member removed from team")
       window.location.reload();
 
@@ -191,8 +196,45 @@ function Dashboard() {
 
             {(accountLevel === 'admin' || accountLevel === 'staff') && (
               <>
+
+              <div className="container mt-5">
+                <div className="card shadow-sm border-0">
+                  <div className="card-body">
+                    <h5 className="card-title text-center">Navigating the dashboard</h5>
+                    <p className="card-text text-center text-muted">
+                      Follow these steps:
+                    </p>
+                    <ul className="list-group list-group-flush">
+                      <li className="list-group-item text-center">
+                        <span className="bullet">&#8226;</span> If you're admin to remove a member simply hit remove <i>This is a one time action</i>.
+                      </li>
+                      <li className="list-group-item text-center">
+                        <span className="bullet">&#8226;</span> To update your profile settings click on edit settings, and update your information this information will be displayed on the team page so don't put any sensitive data.
+                      </li>
+                      <li className="list-group-item text-center">
+                        <span className="bullet">&#8226;</span> To accept a verification request select the drop down and choose the role (note that once you select the role, it is assigned to them).
+                      </li>
+                      
+                    </ul>
+                  </div>
+                </div>
+              </div>
+               <div>
+
+
+              <h1 className='display-6'>Edit Profile Settings </h1>
+              <button
+                        className="text-light btn btn-dark"
+                        onClick={() => {
+                          navigate('/profile/' + userId);
+                        }}
+                        
+                      >
+                        Edit Settings
+                      </button>
+            </div>
                 <div className="mt-5 mb-5 p-4 shadow rounded" style={{ backgroundColor: '"rgba(255, 255, 255, 0.4)', overflowX: 'scroll', display: 'block', overflowY: 'scroll', height: '250px' }}>
-                  <h2 className="mb-4" style={{ color: '#003366' }}>Team Members (Staff)</h2>
+                  <h2 className="mb-4" style={{ color: '#003366' }}>Team Members</h2>
                   {teamMembers.length > 0 ? (
                     <table className="table table-bordered" style={{ borderColor: '#003366' }}>
                       <thead>
@@ -374,6 +416,7 @@ function Dashboard() {
               <ViewMessages/>
             </div>
             <Analytics />
+           
           </>
         ) : (
           <p>Please log in to access the dashboard.</p>

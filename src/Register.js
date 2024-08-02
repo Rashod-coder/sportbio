@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { auth, db } from './Firebase/Firebase';
-import { createUserWithEmailAndPassword, signOut } from 'firebase/auth';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import './Register.css';
@@ -17,32 +17,33 @@ function Register() {
 
   const handleRegister = async (e) => {
     e.preventDefault();
+    setError('');
 
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
-      console.log(user.uid);
 
-      try {
-        await signOut(auth);
-        console.log("Signed out");
-      } catch (error) {
-        console.log("Error signing out", error);
-      }
+      // Create user document in 'users' collection
+      const userDocRef = doc(db, 'users', user.uid);
+      await setDoc(userDocRef, {
+        email: email,
+        firstName: firstName,
+        lastName: lastName,
+        accountLevel: 'basic'
+      });
+      console.log("User document successfully written in 'users'!");
 
-      try {
-        const docRef = doc(db, 'users', user.uid);
-        await setDoc(docRef, {
-          email: email,
-          firstName: firstName,
-          lastName: lastName,
-          accountLevel: 'basic'
-        });
-        console.log("Document successfully written!");
-      } catch (e) {
-        console.error("Error adding document: ", e);
-      }
+      // Create user document in 'profile' collection
+      const profileDocRef = doc(db, 'profile', user.uid);
+      await setDoc(profileDocRef, {
+        email: email,
+        firstName: firstName,
+        lastName: lastName,
+        accountLevel: 'basic'
+      });
+      console.log("Profile document successfully written in 'profile'!");
 
+      // Alert and redirect after successful registration
       window.alert("Account Created");
       navigate("/login");
     } catch (error) {

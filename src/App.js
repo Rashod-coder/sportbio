@@ -14,6 +14,8 @@ import Fundraiser from './Fundraising';
 import Posts from './Post';
 import './App.css';
 import { Analytics } from "@vercel/analytics/react";
+import Team from './Team'
+import Profile from './Profile';
 
 const NotFound = () => {
   return (
@@ -37,6 +39,9 @@ function App() {
             <Route path="register" element={<Register />} />
             <Route path="volunteer" element={<Fundraiser />} />
             <Route path="blogs/:id" element={<Posts />} />
+            <Route path="team" element={<Team />} />
+            <Route path="profile/:id" element={<Profile />} />
+
 
             <Route
               path="dashboard"
@@ -70,10 +75,11 @@ function Layout() {
   }, [location]);
 
   // List of paths where the Footer should not be displayed
-  const noFooterPaths = ['/dashboard', '/login', '/register', '/blogs'];
+  const noFooterPaths = ['/dashboard', '/login', '/register', '/blogs', '/team'];
   
   // Check if the current path starts with `/blogs/`
   const isBlogPage = location.pathname.startsWith('/blogs/');
+  const isProfile = location.pathname.startsWith('/profile/');
 
   return (
     <>
@@ -81,7 +87,7 @@ function Layout() {
       <main>
         <Outlet />
       </main>
-      {!noFooterPaths.includes(location.pathname) && !isBlogPage && <Footer />}
+      {!noFooterPaths.includes(location.pathname) && !isBlogPage && !isProfile && <Footer />}
     </>
   );
 }

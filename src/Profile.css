@@ -1,0 +1,65 @@
+/* ProfileEdit.css */
+
+.profile-edit-container {
+    background-color: #f0f4f8;
+    color: #003366;
+    max-width: 600px;
+    margin: auto;
+    padding: 40px;
+    border-radius: 10px;
+  }
+  
+  .form-label {
+    font-weight: bold;
+    color: #003366;
+  }
+  
+  .form-control {
+    background: none;
+    border: none;
+    border-bottom: 1px solid #003366;
+    border-radius: 0;
+    padding: 10px 5px;
+    box-shadow: none;
+    color: #003366;
+  }
+  
+  .form-control:focus {
+    box-shadow: none;
+    border-bottom: 2px solid #003366;
+  }
+  
+  .profile-picture-preview {
+    width: 100px;
+    height: 100px;
+    margin-top: 10px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  .btn-primary {
+    background-color: #003366;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+  }
+  
+  .btn-primary:hover {
+    background-color: #002244;
+  }
+  /* Profile.css */
+
+/* Add a CSS class for the spinner within the profile picture */
+.profile-edit .spinner-border {
+    width: 20px;
+    height: 20px;
+    border-width: 3px;
+    border-color: #003366 transparent transparent transparent;
+  }
+  
+  .profile-edit .img-thumbnail {
+    border-radius: 50%;
+    border: 3px solid #003366;
+    margin: 0 auto 15px;
+  }
+  
