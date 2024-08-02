@@ -84,8 +84,8 @@ function BlogPage() {
     boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
     overflow: 'hidden',
     marginBottom: '1rem',
-    maxHeight: '300px',
-    minHeight: '300px',
+    maxHeight: '350px',
+    minHeight: '350px',
     display: 'flex',
     flexDirection: 'column',
   };
