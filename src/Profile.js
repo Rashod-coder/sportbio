@@ -133,6 +133,7 @@ function ProfileEdit() {
                 value={profileData.firstName}
                 onChange={handleChange}
                 required
+                disabled
               />
             </div>
             <div className="mb-3">
@@ -145,6 +146,7 @@ function ProfileEdit() {
                 value={profileData.lastName}
                 onChange={handleChange}
                 required
+                aria-disabled
               />
             </div>
             <div className="mb-3">
