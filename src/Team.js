@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from './Firebase/Firebase';
 import { useNavigate } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function Officers() {
   const [officers, setOfficers] = useState([]);
@@ -51,8 +52,6 @@ function Officers() {
     fetchOfficers();
   }, []);
 
- 
-
   function formatURL(url) {
     if (!url) return '#';
     if (url.startsWith('http://') || url.startsWith('https://')) return url;
@@ -70,22 +69,26 @@ function Officers() {
       ) : (
         <>
           <h1 style={{ marginBottom: '20px', fontSize: '2.5rem', color: '#003366' }}>Meet Our Team</h1>
-          <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '20px' }}>
+          <div className="container">
             {officers.length === 0 ? (
               <p>No officers found.</p>
             ) : (
               officers.map((officer) => (
-                <div key={officer.id} style={{ border: '1px solid #ddd', borderRadius: '12px', padding: '20px', width: '300px', boxShadow: '0 6px 12px rgba(0, 0, 0, 0.1)', textAlign: 'center', backgroundColor: '#ffffff', position: 'relative' }}>
-                  <img src={officer.profilePicture} alt={`${officer.firstName} ${officer.lastName}`} style={{ width: '200px', height: '200px', borderRadius: '50%', objectFit: 'cover', border: '3px solid #003366', margin: '0 auto 15px' }} />
-                  <h2 style={{ fontSize: '1.5rem', margin: '10px 0', color: '#003366' }}>{officer.firstName} {officer.lastName}</h2>
-                  <p style={{ fontSize: '0.9rem', margin: '10px 0', color: '#555' }}>{officer.bio}</p>
-                  <p style={{ fontSize: '0.9rem', margin: '5px 0', color: '#007bff' }}><strong>Email:</strong> {officer.email}</p>
-                  <p style={{ fontSize: '0.9rem', margin: '5px 0', color: '#666' }}><strong>Role:</strong> {officer.role}</p>
-                  <p style={{ margin: '10px 0', fontSize: '0.9rem' }}>
-                    <a href={formatURL(officer.instagram)} target="_blank" rel="noopener noreferrer" style={{ color: '#007bff', textDecoration: 'none', margin: '0 5px' }}>Instagram</a>
-                    <span> | </span>
-                    <a href={formatURL(officer.linkedin)} target="_blank" rel="noopener noreferrer" style={{ color: '#007bff', textDecoration: 'none', margin: '0 5px' }}>LinkedIn</a>
-                  </p>
+                <div key={officer.id} className="row mb-4" style={{ alignItems: 'center', backgroundColor: '#ffffff', borderRadius: '12px', boxShadow: '0 6px 12px rgba(0, 0, 0, 0.1)', padding: '20px' }}>
+                  <div className="col-md-3 text-center">
+                    <img src={officer.profilePicture} alt={`${officer.firstName} ${officer.lastName}`} className="img-fluid rounded-circle" style={{ width: '200px', height: '200px', objectFit: 'cover', border: '3px solid #003366' }} />
+                  </div>
+                  <div className="col-md-9 text-start">
+                    <h2 style={{ fontSize: '1.5rem', color: '#003366' }}>{officer.firstName} {officer.lastName}</h2>
+                    <p style={{ color: '#555' }}>{officer.bio}</p>
+                    <p style={{ color: '#007bff' }}><strong>Email:</strong> {officer.email}</p>
+                    <p style={{ color: 'black' }}><strong>Role:</strong> {officer.role}</p>
+                    <p>
+                      <a href={formatURL(officer.instagram)} target="_blank" rel="noopener noreferrer" style={{ color: '#007bff', textDecoration: 'none', margin: '0 5px' }}>Instagram</a>
+                      <span> | </span>
+                      <a href={formatURL(officer.linkedin)} target="_blank" rel="noopener noreferrer" style={{ color: '#007bff', textDecoration: 'none', margin: '0 5px' }}>LinkedIn</a>
+                    </p>
+                  </div>
                 </div>
               ))
             )}
