@@ -61,6 +61,8 @@ function RequestRoleChange() {
       alert('Please select a role to request.');
       return;
     }
+
+    // Validate requestedLevel on the backend
     try {
       const newRequest = {
         userId,
@@ -100,48 +102,59 @@ function RequestRoleChange() {
   return (
     <div className="d-flex flex-column align-items-center justify-content-center">
       <div className="container p-4 shadow rounded" style={{ maxWidth: '600px', backgroundColor: 'rgba(219, 209, 214, 0.2)', borderRadius: '8px' }}>
-        <h2 className="mb-4 text-center" style={{ color: '#333' }}>Request Role Change</h2>
-        <p className="lead text-center" style={{ color: '#555' }}>
-          Current role: <strong>{currentRole}</strong>
-        </p>
-        <form onSubmit={handleRoleRequest}>
-          <div className="form-group mb-3">
-            <label htmlFor="requestedLevel" className="form-label" style={{ color: '#333', fontWeight: '500' }}>Requested Level</label>
-            <p>Please note that it may take time to change your account depending on factors, and your account status will only change if you had applied to be part of the team and gotten in.</p>
-
-            <select
-              id="requestedLevel"
-              className="form-select"
-              value={requestedLevel}
-              onChange={(e) => setRequestedLevel(e.target.value)}
-              style={{ borderColor: '#ddd', borderRadius: '1px', boxShadow: 'none' }}
-              required
-              disabled={hasPendingRequest} 
-            >
-              <option value="" disabled>Select a role</option>
-              {currentRole === 'basic' && (
-                <>
-                  <option value="staff">Staff</option>
-                  <option value="admin">Admin</option>
-                </>
-              )}
-              {currentRole === 'staff' && (
-                <>
-                  <option value="admin">Admin</option>
-                  <option value="basic">Basic</option>
-                </>
-              )}
-            </select>
-          </div>
-          <button
-            type="submit"
-            className="btn btn-primary btn-lg mt-3 w-100"
-            style={{ backgroundColor: '#007bff', borderColor: '#007bff', borderRadius: '4px', boxShadow: 'none' }}
-            disabled={hasPendingRequest} 
-          >
-            {hasPendingRequest ? 'Request Pending' : 'Submit Request'}
-          </button>
-        </form>
+        <h2 className="mb-4 text-center" style={{ color: '#333' }}>
+          {hasPendingRequest ? 'Role Request Pending' : 'Request Role Change'}
+        </h2>
+        {hasPendingRequest ? (
+          <p className="lead text-center" style={{ color: '#555' }}>
+            Role request is pending. Please wait for admin to change your role. In the meantime learn more about us! Visit team page to learn about our team members, or read some of our blogs!
+          </p>
+        ) : (
+          <>
+            <p className="lead text-center" style={{ color: '#555' }}>
+              Current role: <strong>{currentRole}</strong>
+            </p>
+            <form onSubmit={handleRoleRequest}>
+              <div className="form-group mb-3">
+                <label htmlFor="requestedLevel" className="form-label" style={{ color: '#333', fontWeight: '500' }}>
+                  Requested Level
+                </label>
+                <p>Please note that it may take time to change your account depending on factors, and your account status will only change if you had applied to be part of the team and gotten in.</p>
+                <select
+                  id="requestedLevel"
+                  className="form-select"
+                  value={requestedLevel}
+                  onChange={(e) => setRequestedLevel(e.target.value)}
+                  style={{ borderColor: '#ddd', borderRadius: '1px', boxShadow: 'none' }}
+                  required
+                  disabled={hasPendingRequest} 
+                >
+                  <option value="" disabled>Select a role</option>
+                  {currentRole === 'basic' && (
+                    <>
+                      <option value="staff">Staff</option>
+                      <option value="admin">Admin</option>
+                    </>
+                  )}
+                  {currentRole === 'staff' && (
+                    <>
+                      <option value="admin">Admin</option>
+                      <option value="basic">Basic</option>
+                    </>
+                  )}
+                </select>
+              </div>
+              <button
+                type="submit"
+                className="btn btn-primary btn-lg mt-3 w-100"
+                style={{ backgroundColor: '#007bff', borderColor: '#007bff', borderRadius: '4px', boxShadow: 'none' }}
+                disabled={hasPendingRequest}
+              >
+                {hasPendingRequest ? 'Request Pending' : 'Submit Request'}
+              </button>
+            </form>
+          </>
+        )}
       </div>
     </div>
   );
