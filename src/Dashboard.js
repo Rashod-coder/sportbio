@@ -5,10 +5,13 @@ import { useNavigate } from 'react-router-dom';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'react-quill/dist/quill.snow.css';
+import { SketchPicker } from 'react-color';
 import RequestRoleChange from './verify';
 import ViewMessages from './messages';
 import Bio from './Bio';
 import { Analytics } from "@vercel/analytics/react"
+
 
 function Dashboard() {
   const [userName, setUserName] = useState('');
@@ -25,6 +28,8 @@ function Dashboard() {
   const [verificationRequests, setVerificationRequests] = useState([]);
   const [teamMembers, setTeamMembers] = useState([]);
   const navigate = useNavigate();
+
+  
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
@@ -99,6 +104,8 @@ function Dashboard() {
       window.alert("Image Size too Big")
     }
   };
+
+  
   
   const handleSummaryChange = (e) => {
     const value = e.target.value;
@@ -159,6 +166,7 @@ function Dashboard() {
       window.location.reload();
 
     } catch (error) {
+      window.alert("You are not authorized to this command further abusing will lead to removal")
       console.error('Error removing from team: ', error);
     }
   };
@@ -222,9 +230,8 @@ function Dashboard() {
                <div>
 
 
-              <h1 className='display-6'>Edit Profile Settings </h1>
               <button
-                        className="text-light btn btn-dark"
+                        className="text-light btn btn-dark mt-5 me-3"
                         onClick={() => {
                           navigate('/profile/' + userId);
                         }}
@@ -325,26 +332,42 @@ function Dashboard() {
                         Content
                       </label>
                       <ReactQuill
-                      theme="snow"
-                      value={postContent}
-                      onChange={setPostContent}
-                      modules={{
-                        toolbar: [
-                          [{ header: [1, 2, false] }],
-                          ['bold', 'italic', 'underline', 'strike'],
-                          [{ list: 'ordered' }, { list: 'bullet' }],
-                          ['link', 'image'], 
-                          ['clean'],
-                        ],
-                      }}
-                      style={{
-                        borderColor: '#003366',
-                        height: '200px',
-                        overflow: 'auto',
-                        backgroundColor: 'white',
-                      }}
-                      placeholder="Enter your content here"
-                    />
+        theme="snow"
+        value={postContent}
+        onChange={setPostContent}
+        modules={{
+          toolbar: [
+            [{ header: [1, 2, 3, 4, 5, 6, false] }],
+            ['bold', 'italic', 'underline', 'strike'],
+            [{ list: 'ordered' }, { list: 'bullet' }],
+            [{ color: [] }, { background: [] }],
+            [{ size: [] }],
+            ['link', 'image'],
+            ['clean'],
+          ],
+          clipboard: {
+            matchVisual: false,
+          },
+        }}
+        formats={[
+          'header', 'font', 'size', 'bold', 'italic', 'underline', 'strike',
+          'list', 'bullet', 'link', 'image', 'color', 'background'
+        ]}
+        style={{
+          borderColor: 'rgba(0, 51, 102, 0.5)', // Semi-transparent dark blue border
+          borderWidth: '2px', // Thicker border for modern look
+          borderStyle: 'solid', // Solid border
+          borderRadius: '12px', // More rounded corners
+          height: '400px', // Adjusted height
+          overflow: 'auto', // Scrollable content
+          backgroundColor: 'rgba(255, 255, 255, 0.6)', // Semi-transparent white background
+          fontFamily: 'Arial, sans-serif', // Modern font
+          fontSize: '14px', // Font size for readability
+          lineHeight: '1.6', // Line height for better readability
+          boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)', // Elevated effect with shadow
+        }}
+        placeholder="Enter your content here if you need help on how to use this editor click on help button below"
+      />
                     </div>
                     <button
                       type="submit"
@@ -353,7 +376,9 @@ function Dashboard() {
                     >
                       Submit
                     </button>
+                    
                   </form>
+                  
                 </div>
 
                 <div className="mt-5 mb-5 p-4 shadow rounded" style={{ backgroundColor: '"rgba(255, 255, 255, 0.4)', overflowX: 'auto', display: 'block', overflowY: 'auto', height: '250px' }}>
