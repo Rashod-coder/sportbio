@@ -32,13 +32,20 @@ function Officers() {
               lastName: data.lastName,
               email: data.email || 'No email available',
               bio: data.bio || 'No bio available',
-              profilePicture: data.profilePicture || 'No Picture Avaliable',
+              profilePicture: data.profilePicture || 'No Picture Available',
               role: data.role || 'No role available',
               instagram: data.instagram || 'No Instagram given',
               linkedin: data.linkedin || 'No LinkedIn given',
             };
             officersData.push(officerData);
           }
+        });
+
+        // Sort officersData to put the president at the top
+        officersData.sort((a, b) => {
+          if (a.role === 'Founder/President and Journalist') return -1;
+          if (b.role === 'Full Stack Web Dev @ Sport Injury Bio') return 1;
+          return 0;
         });
 
         setOfficers(officersData);
